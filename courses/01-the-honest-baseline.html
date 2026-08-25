@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 1 of 6. The famous study said AI made experienced developers 19 percent slower. Its authors have since partly walked it back. Here is what the evidence actually supports, plus a playground that really runs the code.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="The honest baseline - learn ai coding with phoebe">
+<meta property="og:description" content="Session 1 of 6. The 19 percent slowdown, the walk-back its authors published, and what the evidence actually supports.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/courses/01-the-honest-baseline.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The honest baseline - learn ai coding with phoebe">
+<meta name="twitter:description" content="Session 1 of 6. The 19 percent slowdown, and the walk-back its own authors published.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 1 · The honest baseline - learn ai coding with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ai-coding-with-phoebe</a> / Session 1 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn AI Coding with Phoebe · Session 1 of 6</div>
+    <h1>The honest <span class="accent">baseline</span></h1>
+    <p class="sub">One well-known study measured experienced developers as nineteen percent slower with AI, while those same developers believed they had been twenty percent faster. Another measured fifty-six percent faster. Both are real, both are honest, and the researchers behind the first have since published a partial walk-back of their own headline. Tonight you learn to read that evidence properly, and then you run code in the browser to see where the gap actually lives.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Start here</span>
+      <span class="chip audience">Anyone who codes as part of the job</span>
+      <span class="chip audience">The code on this page really executes</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · What the evidence actually says</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: run the tasks</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>How this course works</h2>
+    </div>
+    <p class="lede">Six sessions, 45 minutes each, and <strong>one real feature</strong> that you ship through all of them. Something small and genuine from your own backlog. By session 6 it is written, reviewed, secured and merged, and you know which parts of that you should have done differently.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> The ability to tell a single-task lab result from a real-codebase result, one habit that measurably reduces the defects in what you accept, and a personal answer to the question of whether this is actually making you faster.</p>
+    </div>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>The one thing nobody else teaches<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>There is a lot of official training on these tools. Microsoft Learn has 317 minutes on Copilot fundamentals alone. DeepLearning.AI has a two-hour Claude Code course taught by Anthropic's own head of technical education. GitHub has a certification exam. They are good and this course maps against them honestly.</p>
+        <p>What none of them covers is the evidence in Part 1: whether any of it makes you faster, what happens to a team's stability when it does, and what the research says about the security of what comes back. That is not an oversight. It is just not what a vendor course is for.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 1 ============ -->
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the evidence</span>
+      <h2>The most-cited number in this field, and its own authors' correction</h2>
+      <span class="tag concept">8 min live</span>
+    </div>
+    <p class="lede">In July 2025, METR published a randomised controlled trial that landed hard, because the result was the opposite of what everybody expected. It is worth knowing properly, and it is worth knowing what happened next.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Developers forecast a 24 percent speedup, estimated afterwards they were 20 percent faster, and were measured 19 percent slower">
+        <style>
+          .c1gL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c1gV { font: 800 13px Inter, sans-serif; fill: #fff; }
+          .c1gN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <line x1="440" y1="60" x2="440" y2="230" stroke="#C2D5DC" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text class="c1gN" x="440" y="52" text-anchor="middle">no change</text>
+        <text class="c1gL" x="180" y="90" text-anchor="end">Forecast before</text>
+        <rect x="296" y="72" width="144" height="28" rx="6" fill="#A5F3FC"/>
+        <text class="c1gL" x="284" y="91" text-anchor="end">24% faster</text>
+        <text class="c1gL" x="180" y="142" text-anchor="end">Believed after</text>
+        <rect x="320" y="124" width="120" height="28" rx="6" fill="#06B6D4"/>
+        <text class="c1gL" x="308" y="143" text-anchor="end">20% faster</text>
+        <text class="c1gL" x="180" y="194" text-anchor="end">Actually measured</text>
+        <rect x="440" y="176" width="114" height="28" rx="6" fill="#991B1B"/>
+        <text class="c1gV" x="566" y="196" fill="#991B1B">19% slower</text>
+        <text class="c1gN" x="60" y="264">16 experienced developers, 246 tasks, on repositories they had worked in for years.</text>
+        <text class="c1gN" x="60" y="286">They were wrong about their own productivity by roughly forty percentage points.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the gap between how fast it feels and how fast it is</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What the study actually did<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Sixteen developers with moderate AI experience completed 246 real tasks on mature open-source projects, averaging over 22,000 stars and a million lines of code, which they had contributed to for years. Tooling was primarily Cursor Pro with Claude 3.5 and 3.7 Sonnet.</p>
+        <p>The three numbers, verbatim from the abstract: they forecast that AI would <strong>reduce completion time by 24 percent</strong>. Afterwards they estimated it had <strong>reduced it by 20 percent</strong>. It <strong>increased completion time by 19 percent</strong>. Expert forecasters in economics and machine learning had predicted 38 to 39 percent speedups.</p>
+        <p>The confidence interval, plus 2 to plus 39 percent, is not in the paper. It appears on METR's own follow-up page, so cite it there.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>The authors were careful about scope in a way that most people quoting them are not: "We do not claim that our developers or repositories represent a majority or plurality of software development work," and the result may not hold "for less experienced developers, or for developers working in an unfamiliar codebase."</p>
+        </div>
+      </div>
+    </details>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A timeline showing the 2025 slowdown finding, the 2026 follow-up whose confidence intervals cross zero, and the researchers' current position that developers are likely faster now">
+        <style>
+          .c1tD { font: 700 11px Inter, sans-serif; fill: #5B7480; }
+          .c1tL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c1tB { font: 700 9.5px Inter, sans-serif; fill: #fff; letter-spacing: .04em; }
+          .c1tN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <line x1="140" y1="120" x2="740" y2="120" stroke="#DDEAEF" stroke-width="2"/>
+        <circle cx="140" cy="120" r="7" fill="#0891B2"/>
+        <text class="c1tD" x="140" y="102" text-anchor="middle">2025-07</text>
+        <rect x="96" y="132" width="88" height="17" rx="8" fill="#0891B2"/>
+        <text class="c1tB" x="140" y="144" text-anchor="middle">PUBLISHED</text>
+        <text class="c1tL" x="140" y="168" text-anchor="middle">16 devs, 246 tasks</text>
+        <text class="c1tL" x="140" y="184" text-anchor="middle">measured 19% slower</text>
+        <circle cx="440" cy="120" r="7" fill="#CA8A04"/>
+        <text class="c1tD" x="440" y="102" text-anchor="middle">2026-02</text>
+        <rect x="396" y="132" width="88" height="17" rx="8" fill="#CA8A04"/>
+        <text class="c1tB" x="440" y="144" text-anchor="middle">REVISED</text>
+        <text class="c1tL" x="440" y="168" text-anchor="middle">57 devs, 800+ tasks</text>
+        <text class="c1tL" x="440" y="184" text-anchor="middle">intervals cross zero</text>
+        <circle cx="740" cy="120" r="7" fill="#5B7480"/>
+        <text class="c1tD" x="740" y="102" text-anchor="middle">today</text>
+        <rect x="696" y="132" width="88" height="17" rx="8" fill="#5B7480"/>
+        <text class="c1tB" x="740" y="144" text-anchor="middle">UNSETTLED</text>
+        <text class="c1tL" x="740" y="168" text-anchor="middle">authors: likely faster</text>
+        <text class="c1tL" x="740" y="184" text-anchor="middle">redesigning the study</text>
+        <text class="c1tN" x="60" y="222">Anyone quoting the 19 percent without this timeline is quoting a result its authors have revised.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - what it looks like when honest researchers change their minds in public</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The walk-back, in METR's own words<span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>In February 2026 METR published a design update reporting a larger follow-up: <strong>57 developers, 143 repositories, over 800 tasks</strong>, ten of whom were in the original study.</p>
+        <ul>
+          <li>For the returning original developers: <strong>18 percent slower, confidence interval minus 38 to plus 9 percent.</strong></li>
+          <li>For newly recruited developers: <strong>4 percent slower, confidence interval minus 15 to plus 9 percent.</strong></li>
+          <li><strong>Both intervals cross zero</strong>, which means neither result is distinguishable from no effect.</li>
+        </ul>
+        <p>They name the cause as severe selection bias: developers refused to work without AI, and self-selected which tasks to bring. In their words, "the true speedup could be much higher among the developers and tasks which are selected out of the experiment."</p>
+        <p>And their current position, which is the sentence to remember:</p>
+        <div class="prompt-box good">
+          <span class="label">★ METR, February 2026</span>
+"Based on conversations with study participants, we believe it is likely
+that developers are more sped up from AI tools now - in early 2026 -
+compared to our estimates from early 2025."
+
+"Due to the severity of these selection effects, we are working on
+changes to the design of our study."
+        </div>
+        <p>This course teaches the 19 percent figure <em>with</em> this attached, because a result quoted without its correction is not evidence, it is a talking point.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The numbers pointing the other way, with their conflicts declared<span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Study</th><th>Finding</th><th>Independence</th><th>The catch</th></tr>
+          <tr><td>Peng et al. 2023</td><td>55.8% faster</td><td><strong>Vendor-funded</strong>, Microsoft Research</td><td>a single greenfield toy task: write an HTTP server in JavaScript</td></tr>
+          <tr><td>Cui et al., Management Science 2026</td><td>+26.08% tasks completed, 4,867 developers</td><td>Vendor-adjacent, two Microsoft Research authors</td><td>the paper's own note: "each experiment is noisy and results vary across experiments"</td></tr>
+          <tr><td>Vaithilingam et al., CHI 2022</td><td>no improvement in time or success rate</td><td>Independent, academic</td><td>and yet most participants still preferred the tool</td></tr>
+        </table>
+        <p><strong>How to reconcile them, which is the actual skill:</strong> 55.8 percent on a greenfield toy task and a measured slowdown on a million-line codebase you already know are both true. The gap between those two settings is where all the interesting questions live, and it is the reason this course exists.</p>
+      </div>
+    </details>
+      <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A lab study measures one greenfield task an assistant is good at, while a real working day is mostly existing code, unclear requirements and review">
+        <style>
+          .c1bH { font: 800 13px Inter, sans-serif; }
+          .c1bB { font: 400 12px Inter, sans-serif; fill: #0C1A22; }
+          .c1bN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <rect x="40" y="50" width="390" height="180" rx="12" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+        <text class="c1bH" x="58" y="84" fill="#164E63">What a lab measures</text>
+        <text class="c1bB" x="58" y="114">One task, chosen to be self-contained</text>
+        <text class="c1bB" x="58" y="134">Empty file, no existing code to fit</text>
+        <text class="c1bB" x="58" y="154">Success is "it works", measured once</text>
+        <text class="c1bB" x="58" y="184" fill="#164E63">This is where 55.8 percent comes from</text>
+        <rect x="450" y="50" width="390" height="180" rx="12" fill="#FEF9E7" stroke="#CA8A04" stroke-width="1.5"/>
+        <text class="c1bH" x="468" y="84" fill="#3A2A00">What your Tuesday is</text>
+        <text class="c1bB" x="468" y="114">A codebase you already hold in your head</text>
+        <text class="c1bB" x="468" y="134">Conventions the model cannot see</text>
+        <text class="c1bB" x="468" y="154">Success is "it merged and stayed merged"</text>
+        <text class="c1bB" x="468" y="184" fill="#3A2A00">This is where the slowdown was measured</text>
+        <text class="c1bN" x="60" y="276">Neither study is wrong. They are answering different questions, and only one is your job.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - read the setting before you read the number</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers what practitioners report</span>
+      <h2>Almost right, but not quite</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Set the studies aside and ask 49,000 developers. The Stack Overflow 2025 survey has the clearest picture of what daily use actually feels like, and the trend is not the one the marketing suggests.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Usage is up and trust is down, at the same time<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>80 percent</strong> of developers now use these tools in their workflow.</li>
+          <li><strong>Trust in AI accuracy fell from 40 percent to 29 percent</strong> year over year. Positive favorability fell from 72 to 60.</li>
+          <li>The number one frustration, named by <strong>45 percent</strong>: <strong>"AI solutions that are almost right, but not quite."</strong></li>
+          <li><strong>66 percent say they spend more time fixing almost-right AI-generated code.</strong></li>
+          <li>75 percent would still ask another person when they do not trust the answer.</li>
+        </ul>
+        <p>That third bullet is the whole problem in one phrase. Code that is obviously wrong costs you nothing, because you throw it away in four seconds. Code that is almost right is expensive, because you have to read it carefully enough to find the part that is not.</p>
+        <div class="callout tip">
+          <p><strong>DORA's version of the same finding, at team scale.</strong> Their 2025 report on roughly 5,000 professionals found AI now has a positive relationship with throughput, and still has a <strong>negative relationship with delivery stability</strong>. Their explanation: "an increase in change volume leads to instability" without strong automated testing and fast feedback. And the line worth putting on a wall: <strong>"AI doesn't fix a team; it amplifies what's already there."</strong></p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Five real tasks, really executed</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">The playground below compiles and runs real JavaScript against a real test suite in this page. Every pass and fail is an actual result. What the levers model is which code a differently-worded ask tends to produce, and the last one is a trap.</p>
+
+    <div id="code-live"></div>
+
+    <div class="steps">
+      <div class="step"><p><strong>Start with everything off and read the code.</strong> Zero of five tasks pass. Click through all five and look at what actually broke: <span class="mono">median</span> sorts as strings so it returns 9 for [10,9,8], <span class="mono">retry</span> swallows the error and returns undefined, <span class="mono">slugify</span> leaves the punctuation in.</p></div>
+      <div class="step"><p><strong>Switch on "write the spec before the prompt".</strong> Five of five. One lever, and it is the difference between naming your edge cases and letting the model choose them for you.</p></div>
+      <div class="step"><p><strong>Switch on "give it the surrounding code".</strong> The score does not move, and the amber note disappears. That note is the honest part: no test can tell you that the code ignored your conventions and invented a third way of doing something. It passes and your codebase gets worse.</p></div>
+      <div class="step"><p><strong>Now switch on the trap: accept everything.</strong> Five of five, all green. Then read the code and the red warning underneath it. Every one of those implementations is wrong.</p></div>
+      <div class="step"><p><strong>Click through all five and find each flaw.</strong> <span class="mono">formatBytes</span> returns "undefined" for a big enough number. <span class="mono">parseRange</span> silently returns an empty array for a reversed range. <span class="mono">retry</span> calls your API one extra time. <span class="mono">slugify</span> leaves a trailing dash on any title ending in punctuation. All four pass the shipped suite.</p></div>
+      <div class="step"><p><strong>With the trap still on, switch on "write the tests first".</strong> The same code drops from five of five to one of five. Nothing about the code changed. The only thing that changed is that the tests were written from the spec instead of after the fact.</p></div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>That last step is not a metaphor, it is a measured finding.</strong> A 2026 study found that tests generated after faulty code detect <strong>14 percent</strong> of faults, while tests generated independently detect <strong>25 percent</strong>. Their explanation is exactly what you just watched: "incorrect implementations and tests are mutually consistent, masking defects rather than revealing them."</p>
+    </div>
+
+    <div class="tryrow" data-fn="wordcount" data-multiline="1" data-title="Measure the last prompt you actually typed" data-hint="Paste it here" data-seed="fix the date bug" data-cta="Measure it" data-foot="Not a rule about length. A four-word ask is not concise, it is a set of decisions you handed over without noticing."></div>
+
+    <div class="stakes" data-base="14" data-unit="defects per 100 changes" data-lower-is-better="1" data-title="What the research says actually moves the number" data-foot="Directional, built from the studies cited on this page. The point is which levers are real, not the decimals.">
+      <label><input type="checkbox" data-delta="-5"> You write the spec, naming the edge cases, before you prompt</label>
+      <label><input type="checkbox" data-delta="-4"> You read the whole diff before accepting it</label>
+      <label><input type="checkbox" data-delta="-3"> You check that every new import is a package that really exists</label>
+      <label><input type="checkbox" data-delta="-2"> You trust the output less and engage more with the prompt</label>
+      <label><input type="checkbox" data-delta="9" data-trap="1"> You accept everything because the tests are green</label>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 2</h2>
+      <span class="tag exercise">25 min</span>
+    </div>
+    <ol>
+      <li><strong>Pick the feature.</strong> One real thing from your backlog, small enough to finish in six sessions. That is the artifact.</li>
+      <li><strong>Run your own honest baseline.</strong> Next time you use an assistant on a real task, note the time before you start and the time you actually merged, including review and rework. One data point is not a study, but it is yours.</li>
+      <li><strong>Write the spec before the prompt, once.</strong> Name the edge cases: empty input, the boundary value, the error path. Then prompt. Compare it to how you normally work.</li>
+      <li><strong>Count your almost-rights.</strong> Over a week, tally the times you accepted something and then had to go back and fix it. That number is your personal version of the 66 percent.</li>
+      <li><strong>Optional but genuinely worth it:</strong> read METR's February 2026 update. It is short, and watching researchers revise their own famous result in public is a better lesson in evaluating evidence than any blog post about AI.</li>
+    </ol>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 1 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · One study measures 55.8 percent faster and another measures 19 percent slower. What is the best explanation?</p>
+      <button class="qopt" type="button">A · One of them must have been done badly</button>
+      <button class="qopt" type="button">B · The tools improved dramatically between the two studies</button>
+      <button class="qopt" type="button">C · They measured different things: a greenfield toy task versus real tasks in a million-line codebase the developer already knew</button>
+      <p class="qwhy">Both are honest. The 55.8 percent study asked recruits to write an HTTP server from scratch. METR gave experienced maintainers real issues in repositories they had worked in for years. The setting is the variable.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · What did METR publish in February 2026 about their own 19 percent slowdown finding?</p>
+      <button class="qopt" type="button">A · A larger follow-up whose confidence intervals cross zero, plus a statement that developers are likely faster now</button>
+      <button class="qopt" type="button">B · A confirmation that the effect was larger than first reported</button>
+      <button class="qopt" type="button">C · A retraction of the original paper</button>
+      <p class="qwhy">Not a retraction, a revision. 57 developers, 143 repos, 800+ tasks. The original cohort came out at minus 18 percent with an interval of minus 38 to plus 9, and new recruits at minus 4 percent. They cite severe selection bias and are redesigning the study.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · In the playground, accepting everything scored five out of five while every implementation was wrong. Why did the tests not catch it?</p>
+      <button class="qopt" type="button">A · The tests were badly written by an inexperienced developer</button>
+      <button class="qopt" type="button">B · The suite never asked about the edge cases those implementations got wrong, so nothing turned red</button>
+      <button class="qopt" type="button">C · The playground was simulating the results rather than running them</button>
+      <p class="qwhy">The code really executed and really passed. A green suite proves the tests ran, not that the code is right. Switching on tests-written-first took the same code from five of five to one of five.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ OFFICIAL COVERAGE ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">METR 2025 RCT and the 2026 design update</span><span class="note">16 developers, 246 tasks, forecast 24 / felt 20 / measured minus 19. Plus the follow-up whose intervals cross zero and the authors' current position, taught together</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Peng et al. 2023 · Cui et al. 2026 · Vaithilingam et al. 2022</span><span class="note">All three with their funding and independence declared, and the toy-task-versus-real-codebase reconciliation</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Stack Overflow Developer Survey 2025</span><span class="note">49,000+ respondents. 80 percent usage, trust 40 to 29, the 45 percent almost-right frustration and the 66 percent rework figure</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">DORA 2025</span><span class="note">Positive on throughput, still negative on delivery stability, and the amplification framing</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Microsoft Learn Copilot fundamentals · DeepLearning.AI Claude Code</span><span class="note">Positioned here, not taught. Sessions 2 and 5 map against their working content directly</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Full source map with every URL: <span class="mono">materials/official-course-map.md</span> in this repo. Certificates, videos and assessments stay with the official providers.</p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 1 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Read the setting, not the number</b><span>Toy task greenfield versus real issue in a codebase you know. That gap explains almost every contradiction.</span></div>
+      <div class="cheat-item"><b>The 19 percent has a footnote</b><span>METR's own 2026 follow-up has intervals crossing zero and says developers are likely faster now.</span></div>
+      <div class="cheat-item"><b>The felt-versus-real gap</b><span>Forecast 24 faster, felt 20 faster, measured 19 slower. Your sense of your own speed is not data.</span></div>
+      <div class="cheat-item"><b>Almost right is the expensive kind</b><span>45 percent name it as their top frustration. 66 percent spend more time fixing it.</span></div>
+      <div class="cheat-item"><b>Spec before prompt</b><span>Zero of five to five of five in the playground. Name the edge cases or the model picks them.</span></div>
+      <div class="cheat-item"><b>Green proves the tests ran</b><span>Not that the code is right. Accept-everything scored five of five with four real defects shipped.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>Tonight one lever took you from zero of five to five of five, and it was simply naming the edge cases before asking. Session 2 goes deeper into what the model can and cannot see: why a long session quietly gets worse, what auto-compaction throws away, and why the vendor's own docs tell you to clear your context between tasks.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 1 of 6 · learn-ai-coding-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="02-context-is-everything.html">Next: Context is everything →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script src="../assets/runner.js?v=1"></script>
+<script src="../assets/code-live.js?v=1"></script>
+</body>
+</html>

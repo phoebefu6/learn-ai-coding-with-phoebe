@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 5 of 6. The four tools as they actually are today, how much rope to give an agent, the honest cost conversation, and 22 minutes actually building the feature plan-first with a stated permission posture.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Build the thing - learn ai coding with phoebe">
+<meta property="og:description" content="Session 5 of 6. Claude Code, Copilot, Cursor and Codex as they are today, plan-first agent runs, and cost per merged change instead of cost per prompt.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/courses/05-build-the-thing.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Build the thing - learn ai coding with phoebe">
+<meta name="twitter:description" content="Session 5 of 6. Four tools, four honest catches, and the cost number you should actually be tracking.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 5 · Build the thing - learn ai coding with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ai-coding-with-phoebe</a> / Session 5 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn AI Coding with Phoebe · Session 5 of 6</div>
+    <h1>Build the <span class="accent">thing</span></h1>
+    <p class="sub">Four sessions of evidence, and tonight you cash it in. First a straight look at the four major tools as they actually are in August 2026, including the parts their landing pages leave out. Then how much rope to hand an agent and where the approval gates go. Then the cost conversation nobody has honestly, because everybody is measuring the wrong unit. Then twenty-two minutes of building your feature, plan-first, with the permission posture you wrote last week.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Hands-on</span>
+      <span class="chip audience">Anyone who codes as part of the job</span>
+      <span class="chip audience">Bring whichever tool you actually have</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-2 · Welcome</span>
+      <span class="a2" style="flex:4">2-20 · The four tools, honestly</span>
+      <span class="a3" style="flex:5">20-42 · Build-along: ship the feature</span>
+      <span class="a4" style="flex:1">42-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ PART 1 ============ -->
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the tool landscape</span>
+      <h2>The four tools, and the catch each one does not advertise</h2>
+      <span class="tag concept">8 min live</span>
+    </div>
+    <p class="lede">Every comparison post you have read is out of date, because three of these four changed something structural in 2026. Here is the shape of each one, and then the part you only find out on day three.</p>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> Your feature actually built, a plan-first workflow you have run once so you know what it feels like, and a cost number that means something: what a merged change costs you, not what a prompt costs you.</p>
+    </div>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Four tools, four honest catches<span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Tool</th><th>Current shape</th><th>The catch</th></tr>
+          <tr><td><strong>Claude Code</strong></td><td>agentic: subagents, hooks, headless <span class="mono">-p</span>, an Agent SDK, six permission modes</td><td>numeric rate limits are <strong>not published</strong>, only the structure, a rolling five-hour window plus a weekly one. The bash sandbox is macOS Seatbelt or Linux isolation, so <strong>native Windows is unsupported</strong></td></tr>
+          <tr><td><strong>GitHub Copilot</strong></td><td>agent mode in the IDE, plus a <strong>Cloud Agent</strong> (renamed) that opens a pull request you review</td><td>billing changed on <strong>2026-06-01</strong> to GitHub AI Credits, where 1 credit equals $0.01. Cloud agent sessions have a hard <strong>59-minute cap</strong>. And <strong>signups are paused</strong> for several plans</td></tr>
+          <tr><td><strong>Cursor</strong></td><td>Plan Mode on <span class="mono">Shift+Tab</span>, cloud agents in isolated VMs, unlimited parallel agents</td><td>pricing moved from counting requests to <strong>two token pools</strong>, so old cost advice does not transfer. "Composer" is now both a mode and a model name, which confuses everyone including the docs</td></tr>
+          <tr><td><strong>OpenAI Codex</strong></td><td>a CLI with <span class="mono">codex exec</span> for CI, an IDE extension, and a cloud agent triggered from web, GitHub, GitLab, Linear or Slack</td><td><strong>the name has meant three different things.</strong> Current Codex is a product line, not a model. It is also the only one of the four <strong>publishing hard numeric rate limits</strong></td></tr>
+        </table>
+        <p><strong>Read that last column as a shopping list, not a scoreboard.</strong> If your team is on Windows, one of those catches decides for you. If you need to forecast spend to a finance team, another one does. Nobody here is best; they are differently constrained.</p>
+        <div class="callout tip">
+          <p><strong>Check the signup status before you plan a cohort.</strong> As of the June 2026 changelog, Copilot signups are paused for Student, Pro, Pro+ and Max, and for Business on Free and Team organisations since 2026-04-22. Nothing derails a training session faster than eight people who cannot create an account.</p>
+        </div>
+      </div>
+    </details>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Timeline showing that the Codex name has meant three different things: 2021 completion models, their shutdown in 2023, the removal of codex-mini-latest in 2026, and today's product line">
+        <style>
+          .c5aD { font: 700 11px Inter, sans-serif; fill: #5B7480; }
+          .c5aL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c5aB { font: 700 10px Inter, sans-serif; fill: #fff; letter-spacing: .04em; }
+          .c5aN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <line x1="130" y1="120" x2="730" y2="120" stroke="#DDEAEF" stroke-width="2"/>
+        <circle cx="130" cy="120" r="7" fill="#5B7480"/>
+        <text class="c5aD" x="130" y="102" text-anchor="middle">2021</text>
+        <rect x="86" y="132" width="88" height="17" rx="8" fill="#5B7480"/>
+        <text class="c5aB" x="130" y="144" text-anchor="middle">A MODEL</text>
+        <text class="c5aL" x="130" y="168" text-anchor="middle">completion models</text>
+        <text class="c5aL" x="130" y="184" text-anchor="middle">shipped as an API</text>
+        <circle cx="330" cy="120" r="7" fill="#CA8A04"/>
+        <text class="c5aD" x="330" y="102" text-anchor="middle">2023-03-23</text>
+        <rect x="286" y="132" width="88" height="17" rx="8" fill="#CA8A04"/>
+        <text class="c5aB" x="330" y="144" text-anchor="middle">SHUT OFF</text>
+        <text class="c5aL" x="330" y="168" text-anchor="middle">originals deprecated</text>
+        <text class="c5aL" x="330" y="184" text-anchor="middle">name kept living on</text>
+        <circle cx="530" cy="120" r="7" fill="#991B1B"/>
+        <text class="c5aD" x="530" y="102" text-anchor="middle">2026-02-12</text>
+        <rect x="486" y="132" width="88" height="17" rx="8" fill="#991B1B"/>
+        <text class="c5aB" x="530" y="144" text-anchor="middle">REMOVED</text>
+        <text class="c5aL" x="530" y="168" text-anchor="middle">codex-mini-latest</text>
+        <text class="c5aL" x="530" y="184" text-anchor="middle">the last model gone</text>
+        <circle cx="730" cy="120" r="7" fill="#0891B2"/>
+        <text class="c5aD" x="730" y="102" text-anchor="middle">today</text>
+        <rect x="686" y="132" width="88" height="17" rx="8" fill="#0891B2"/>
+        <text class="c5aB" x="730" y="144" text-anchor="middle">A PRODUCT</text>
+        <text class="c5aL" x="730" y="168" text-anchor="middle">CLI, IDE, cloud agent</text>
+        <text class="c5aL" x="730" y="184" text-anchor="middle">not a model at all</text>
+        <text class="c5aN" x="60" y="222">One name, three meanings. Check which one a tutorial means before you trust its advice.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - most "Codex is deprecated" posts are right about a different Codex</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Why the Codex naming matters more than it sounds<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The 2021 Codex completion models were deprecated on <strong>2023-03-23</strong>. Even <span class="mono">codex-mini-latest</span> was removed on <strong>2026-02-12</strong>. So when someone tells you Codex was shut down, they are quoting a true fact about a dead thing while you are asking about a live product line.</p>
+        <p>This is a small example of a habit worth generalising: <strong>in this field the name and the thing drift apart faster than the documentation gets rewritten.</strong> "Composer" in Cursor is a mode and a model. "Copilot" is an IDE completion, an agent mode, a cloud agent and a code reviewer. Before you accept advice, work out which noun the author had in front of them.</p>
+        <p>The practical upside of Codex today: it is the only one of the four that <strong>publishes hard numeric rate limits</strong>. If you need to write a capacity plan somebody will hold you to, that is not a small thing.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Let the constraint choose, not the review<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Tool arguments go on forever because people compare capability, and at this level the capabilities have converged. Constraints have not. Four questions settle it faster than any comparison table.</p>
+        <ul>
+          <li><strong>What are your developers on?</strong> Claude Code's bash sandbox is macOS Seatbelt or Linux isolation, and native Windows is unsupported. If half the team is on Windows without WSL, that is the end of the conversation.</li>
+          <li><strong>Do you have to forecast the spend?</strong> Codex publishes hard numeric rate limits. Claude Code publishes only the structure plus a real cost benchmark. Cursor's two token pools and Copilot's credits both need modelling.</li>
+          <li><strong>Where does the review already happen?</strong> If your team lives in pull requests, Copilot's cloud agent lands in a workflow you already have, with the human merge requirement enforced for you.</li>
+          <li><strong>Are you teaching a group next month?</strong> Then check account availability first. Paused signups have ended more workshops than any missing feature.</li>
+        </ul>
+        <p>None of this is loyalty. Most people who use these seriously end up with two, and the second one exists because of a constraint rather than a preference.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers agent modes</span>
+      <h2>How much rope, and where the gate goes</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Every one of these tools now offers a spectrum from "suggest a line" to "go away and open a pull request". The decision is not which end is better. It is which rung you are on for this particular task, and whether you know what you signed up to review.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four rungs of agent autonomy, from suggest-only up to an agent opening a pull request, with what you must review at each level">
+        <style>
+          .c5bK { font: 700 10px Inter, sans-serif; fill: #5B7480; letter-spacing: .05em; }
+          .c5bT { font: 700 13px Inter, sans-serif; fill: #0C1A22; }
+          .c5bS { font: 400 12px Inter, sans-serif; fill: #164E63; }
+          .c5bW { font: 700 13px Inter, sans-serif; fill: #fff; }
+          .c5bX { font: 400 12px Inter, sans-serif; fill: #ECFEFF; }
+          .c5bN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <text class="c5bK" x="60" y="40">MORE ROPE GOING UP. THE REVIEW DOES NOT DISAPPEAR, IT CHANGES SHAPE</text>
+        <rect x="60" y="64" width="760" height="46" rx="8" fill="#0891B2"/>
+        <text class="c5bW" x="76" y="86">4 · The agent opens a pull request</text>
+        <text class="c5bX" x="76" y="104">You review it like an external contribution, because that is what it is</text>
+        <rect x="60" y="116" width="620" height="46" rx="8" fill="#06B6D4"/>
+        <text class="c5bT" x="76" y="138">3 · It edits, and asks before each command</text>
+        <text class="c5bS" x="76" y="156">You read every command it proposes, and where the request came from</text>
+        <rect x="60" y="168" width="480" height="46" rx="8" fill="#A5F3FC"/>
+        <text class="c5bT" x="76" y="190">2 · Plan first, then edit</text>
+        <text class="c5bS" x="76" y="208">You read the plan, argue with it, then read the diff</text>
+        <rect x="60" y="220" width="340" height="46" rx="8" fill="#ECFEFF" stroke="#C2D5DC"/>
+        <text class="c5bT" x="76" y="242">1 · Suggest only</text>
+        <text class="c5bS" x="76" y="260">You read every line as it lands</text>
+        <text class="c5bN" x="60" y="288">Pick the rung per task, not per person. The blast radius is what changes, not the tool.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the higher the rung, the earlier your attention has to arrive</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Why plan-first is the rung that pays for itself<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Cursor puts Plan Mode on <span class="mono">Shift+Tab</span>. Claude Code has a plan-shaped permission mode among its six. Codex and Copilot both let you ask for an approach before an edit. Different words, same move: <strong>make the model state its intent while it is still cheap to disagree.</strong></p>
+        <p>Three things a plan gets you that a diff cannot.</p>
+        <ul>
+          <li><strong>You see the files it intends to touch</strong> before it touches them. Half of all bad agent runs are visible right there, in a file list that includes something you did not expect.</li>
+          <li><strong>You argue at the level of approach.</strong> Correcting "use the existing repository layer, do not add a second one" costs one sentence in a plan and an afternoon in a merged branch.</li>
+          <li><strong>Your review has a shape.</strong> Reading a 400-line diff cold is genuinely hard. Reading it against a plan you already agreed to is a comparison, and humans are much better at comparisons than at cold reads.</li>
+        </ul>
+        <div class="callout tip">
+          <p><strong>This is session 1's finding wearing different clothes.</strong> Writing the spec before the prompt took the playground from zero of five to five of five. A plan is a spec you did not have to write yourself, that you get to correct before anything is built.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What "the agent opens a PR" changes about your job<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Rung 4 is the one people underestimate, because it feels like delegation and it is actually a change of role. GitHub states the boundary plainly: "Draft pull requests created by Copilot cloud agent must be reviewed and merged by a human." Copilot's cloud agent sessions also cap at <strong>59 minutes</strong>, which is a useful forcing function: if the task cannot be described tightly enough to finish inside an hour, it was too big to hand over.</p>
+        <p>So your work moves. You spend less time typing and more time doing the three things that were always the expensive part:</p>
+        <ul>
+          <li><strong>Scoping the task well enough to be handed over</strong>, which is most of the value and where most of the failures start.</li>
+          <li><strong>Reviewing an unfamiliar diff</strong>, written by something that does not share your conventions unless you told it to.</li>
+          <li><strong>Owning the merge.</strong> Session 4's rule holds all the way up: no autonomy mode moves the responsibility. It only moves the moment you exercise it.</li>
+        </ul>
+        <p>And remember the injection lesson while you are up here. A cloud agent reading an issue written by an external contributor is reading text from a stranger. That is exactly the surface CamoLeak used.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3 ============ -->
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers cost</span>
+      <h2>You are measuring the wrong unit</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">Almost every cost discussion in this field is about the price of a prompt, a request, a credit or a token. None of those are the thing your employer is buying. They are buying merged changes.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A cost band showing the published Claude Code benchmark of 150 to 250 dollars per developer per month, and around 13 dollars per active day">
+        <style>
+          .c5cT { font: 600 13px Inter, sans-serif; fill: #0C1A22; }
+          .c5cK { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+          .c5cV { font: 800 18px Inter, sans-serif; fill: #164E63; }
+          .c5cN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <text class="c5cT" x="60" y="40">The one published per-developer benchmark, from the vendor's own cost docs</text>
+        <text class="c5cK" x="440" y="86" text-anchor="middle">$150 to $250 per developer per month</text>
+        <rect x="60" y="96" width="760" height="28" rx="6" fill="#DDEAEF"/>
+        <rect x="440" y="96" width="253" height="28" rx="6" fill="#0891B2"/>
+        <text class="c5cK" x="60" y="146">$0</text>
+        <text class="c5cK" x="440" y="146" text-anchor="middle">$150</text>
+        <text class="c5cK" x="693" y="146" text-anchor="middle">$250</text>
+        <text class="c5cK" x="820" y="146" text-anchor="end">$300</text>
+        <text class="c5cV" x="60" y="176">and around $13 per developer per active day</text>
+        <text class="c5cN" x="60" y="204">Published for Claude Code. The other three do not publish a comparable figure.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - a real number to anchor on, and the only one of its kind</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The numbers that exist, and the one you have to make yourself<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Two published anchors are worth knowing.</p>
+        <ul>
+          <li><strong>Claude Code's own docs give a real benchmark:</strong> "around <strong>$13 per developer per active day</strong> and <strong>$150-250 per developer per month</strong>". That is unusually candid for a vendor and it is the number to quote when someone asks what this costs.</li>
+          <li><strong>Copilot moved to GitHub AI Credits on 2026-06-01</strong>, where <strong>1 credit equals $0.01</strong>. That conversion is the useful part, because it turns an internal currency back into money you can put in a spreadsheet.</li>
+        </ul>
+        <p>Cursor's move to two token pools and Codex's bundling into ChatGPT plans mean neither gives you a clean per-developer figure either. So build your own, and build it in the unit that matters:</p>
+        <div class="prompt-box good">
+          <span class="label">★ The metric worth tracking</span>
+cost per merged change
+  = (tool spend over the period)
+  / (changes that actually merged in the period)
+
+Not cost per prompt. Not cost per accepted suggestion.
+A prompt you threw away cost you money and produced nothing.
+        </div>
+        <p>Track it for a month and two things usually happen. The number is lower than the anxiety about it, and the variance between people is enormous. That variance is the interesting finding, because it is a workflow difference and workflow is learnable.</p>
+        <div class="callout example">
+          <span class="ex-pill">Watch the denominator</span>
+          <p>Recall session 1: developers forecast a 24 percent speedup, believed afterwards they had been 20 percent faster, and were measured 19 percent slower on their own repositories. Your sense of the numerator is unreliable and your sense of the denominator is worse. Count merges from the log, not from memory.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ BUILD-ALONG ============ -->
+  <section class="section" id="demo-5">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Build the feature, plan-first, posture on</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">Whichever tool you have. The workflow is the same everywhere and it is the point of the exercise, not the vendor. Start by saying your permission posture out loud, the one you wrote in session 4.</p>
+
+    <div class="wipe" data-title="The same task, two runs" data-label-a="Bare agent run" data-label-b="Plan-first run"
+         data-foot="Drag right to left to reveal the second run. Same task, same tool, same afternoon.">
+      <div class="wipe-a">
+        <p>"Add rate limiting to the API."</p>
+        <p>Nine minutes later: a new middleware, a new dependency you have not heard of, an in-memory counter that resets on deploy, and edits in four files including one you did not know existed.</p>
+        <p>Your review starts cold, at 400 lines, with no idea what it was trying to do.</p>
+      </div>
+      <div class="wipe-b">
+        <p>"Plan first. Rate limiting on the write endpoints only, using the Redis client already in this repo. No new dependencies. Show me the files you would touch."</p>
+        <p>Plan comes back in forty seconds. You delete one step, name the config file, then approve.</p>
+        <p>Your review is a comparison against a plan you agreed to, not a cold read.</p>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p><strong>1 · State the posture, then set it.</strong> Say the sentence from session 4 out loud, then actually configure it. Not the bypass mode, unless you are in a container with no internet, which is the only place the vendor says it belongs.</p></div>
+      <div class="step"><p><strong>2 · Ask for a plan, not a change.</strong> Name the constraint, the files that are off limits, and the libraries already in the repo. The plan should come back in under a minute. If it comes back vague, the ask was vague.</p></div>
+      <div class="step"><p><strong>3 · Argue with the plan.</strong> Delete a step. Rename a file. Reject a new dependency. This is the cheapest minute of the whole session and most people skip it because a plan looks like an answer.</p></div>
+      <div class="step"><p><strong>4 · Let it build, and read the approval prompts properly.</strong> Use the mock below as your checklist. Every prompt you click through without reading is a decision you made anyway, just faster.</p></div>
+      <div class="step"><p><strong>5 · Run the session 4 supply-chain check on anything new.</strong> If the agent added an import, it goes through the four steps before you keep it. This takes about a minute and it is the last honest moment to catch it.</p></div>
+      <div class="step"><p><strong>6 · Note two numbers.</strong> Wall-clock time from ask to working code, and how long the review took. Those two go in your cost-per-merged-change tally. One data point is not a study, but six sessions of them is yours.</p></div>
+    </div>
+
+    <div class="hotspot" data-title="An approval prompt, and the four things to actually read">
+      <div class="hs-mock">
+        <svg viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A mock approval dialog showing a proposed install command, the working directory, where the request came from, and the option that stops asking">
+          <style>
+            .c5hH { font: 700 13px Inter, sans-serif; fill: #fff; }
+            .c5hL { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+            .c5hM { font: 600 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #A5F3FC; }
+            .c5hB { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+            .c5hA { font: 600 12px Inter, sans-serif; fill: #3A2A00; }
+          </style>
+          <rect x="60" y="30" width="760" height="300" rx="10" fill="#fff" stroke="#C2D5DC"/>
+          <rect x="60" y="30" width="760" height="40" rx="10" fill="#164E63"/>
+          <rect x="60" y="56" width="760" height="14" fill="#164E63"/>
+          <text class="c5hH" x="80" y="56">Permission required</text>
+          <text class="c5hL" x="84" y="104">The agent proposes to run:</text>
+          <rect x="84" y="116" width="712" height="44" rx="6" fill="#0C1A22"/>
+          <text class="c5hM" x="102" y="144">npm install imagemagick-cli --save</text>
+          <text class="c5hL" x="84" y="188">Working directory: /repo/services/api</text>
+          <rect x="84" y="200" width="440" height="24" rx="5" fill="#FEF9E7"/>
+          <text class="c5hA" x="96" y="217">Requested while reading: issue 482, external author</text>
+          <rect x="84" y="248" width="170" height="36" rx="6" fill="#ECFEFF" stroke="#C2D5DC"/>
+          <text class="c5hB" x="169" y="271" text-anchor="middle">Yes, once</text>
+          <rect x="270" y="248" width="250" height="36" rx="6" fill="#FEF9E7" stroke="#CA8A04"/>
+          <text class="c5hB" x="395" y="271" text-anchor="middle">Yes, and stop asking</text>
+          <rect x="536" y="248" width="170" height="36" rx="6" fill="#fff" stroke="#C2D5DC"/>
+          <text class="c5hB" x="621" y="271" text-anchor="middle">No, and steer it</text>
+          <text class="c5hL" x="84" y="312">Auto mode reduces prompts. It does not guarantee safety.</text>
+        </svg>
+      </div>
+      <button class="hs-pin" style="--x:30%;--y:38%" data-title="The exact command"
+              data-cap="Read the whole line, not the verb. This one installs a package nobody in your team has named."></button>
+      <button class="hs-pin" style="--x:23%;--y:52%" data-title="Where it runs"
+              data-cap="A command is only as safe as the directory it lands in. Check the path before the verb."></button>
+      <button class="hs-pin" style="--x:52%;--y:58%" data-title="Why it is asking"
+              data-cap="This is the session 4 lesson on screen. The request came from text a stranger wrote in an issue."></button>
+      <button class="hs-pin" style="--x:45%;--y:73%" data-title="The sticky yes"
+              data-cap="MCPoison was exactly this: an approval given once, still valid after the thing behind it changed."></button>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>If you only take one habit from tonight.</strong> Ask for the plan. It costs forty seconds, it makes the review a comparison instead of a cold read, and it is the one move that works identically across all four tools regardless of what they rename next quarter.</p>
+    </div>
+
+    <div class="tryrow" data-fn="wordcount" data-multiline="1" data-title="Score the ask you are about to hand to an agent" data-hint="Paste your plan-first prompt" data-seed="Plan first. Rate limiting on the write endpoints only, using the Redis client already in this repo. No new dependencies. List the files you would touch." data-cta="Measure it" data-foot="Not a rule about length. Count the decisions you named versus the ones you left for it to make."></div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 6</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Finish the feature.</strong> It should be working and reviewed by session 6, because session 6 is about getting it merged without hurting anybody.</li>
+      <li><strong>Run one task at rung 4.</strong> Something small and genuinely boring, handed to a cloud agent or an unattended run, and reviewed like an external contribution. You need one experience of this, not an opinion about it.</li>
+      <li><strong>Start the cost tally.</strong> Tool spend for the month divided by changes that actually merged. Two numbers in a note. Compare it to the published $150-250 per developer per month anchor.</li>
+      <li><strong>Check your plan-to-diff ratio, once.</strong> On your next three tasks, ask for a plan on two of them. Note which reviews felt harder. That is your own evidence, and you will trust it more than mine.</li>
+      <li><strong>Look up the current shape of your own tool.</strong> Not a blog post, the vendor's docs page, dated. Three of these four changed something structural this year and yours will change again.</li>
+    </ol>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 5 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Someone tells you "Codex was deprecated years ago". What is the accurate response?</p>
+      <button class="qopt" type="button">A · They are right, the product line was discontinued and replaced</button>
+      <button class="qopt" type="button">B · The 2021 completion models were deprecated, and codex-mini-latest was removed in 2026, but current Codex is a product line rather than a model</button>
+      <button class="qopt" type="button">C · They are wrong, the original 2021 models are still available through the API</button>
+      <p class="qwhy">The name has meant three different things. The originals went on 2023-03-23 and codex-mini-latest was removed on 2026-02-12. What exists today is a CLI, an IDE extension and a cloud agent, and it is the only one of the four publishing hard numeric rate limits.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · What does Claude Code publish about its rate limits?</p>
+      <button class="qopt" type="button">A · Hourly and weekly numeric caps per plan tier</button>
+      <button class="qopt" type="button">B · Nothing at all, the limits are undocumented</button>
+      <button class="qopt" type="button">C · Only the structure, a rolling five-hour window plus a weekly one, with no published numbers</button>
+      <p class="qwhy">The structure is documented, the numbers are not. Any "X hours per week" figure you have seen is folklore. The docs do publish a real cost benchmark though: around $13 per developer per active day and $150-250 per month.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Why is asking for a plan before an edit worth the forty seconds?</p>
+      <button class="qopt" type="button">A · It turns your review from a cold read of a diff into a comparison against something you already agreed to</button>
+      <button class="qopt" type="button">B · It makes the agent write less code overall</button>
+      <button class="qopt" type="button">C · It removes the need to review the resulting diff</button>
+      <p class="qwhy">You also see the file list before anything is touched, and you can reject an approach for the price of one sentence. It does not remove the review; GitHub still requires a human to review and merge cloud agent pull requests, and so should you.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ OFFICIAL COVERAGE ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Claude Code documentation</span><span class="note">Six permission modes, subagents, hooks, headless runs, the unpublished numeric limits, no native Windows bash sandbox, and the $13 per active day benchmark</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">GitHub Copilot plans and the June 2026 changelog</span><span class="note">The move to GitHub AI Credits at 1 credit = $0.01, the renamed Cloud Agent, the 59-minute session cap, the paused signups, and the human-merge requirement</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Cursor models and pricing docs</span><span class="note">Plan Mode on Shift+Tab, cloud agents in isolated VMs, the shift to two token pools, and the Composer naming collision</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">OpenAI Codex docs and the API deprecations page</span><span class="note">The three meanings of the name, the 2023 and 2026 removal dates, and the fact that it is the only one publishing hard numeric limits</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Microsoft Learn AI-assisted development paths · DeepLearning.AI Claude Code</span><span class="note">This session maps directly against their working content. Take them for the tool surface, take this for the choices</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Full source map with every URL: <span class="mono">materials/official-course-map.md</span> in this repo. Certificates, videos and assessments stay with the official providers.</p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 5 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Ask for the plan</b><span>Forty seconds, and your review becomes a comparison instead of a cold read. Works identically in all four tools.</span></div>
+      <div class="cheat-item"><b>Pick the rung per task</b><span>Suggest, plan-first, gated edits, agent PR. What changes is the blast radius and when your attention has to arrive.</span></div>
+      <div class="cheat-item"><b>Cost per merged change</b><span>Spend divided by merges. A prompt you threw away cost money and produced nothing.</span></div>
+      <div class="cheat-item"><b>The one published anchor</b><span>Around $13 per developer per active day, $150-250 per month, from Claude Code's own cost docs.</span></div>
+      <div class="cheat-item"><b>Check the catch, not the pitch</b><span>No native Windows sandbox, a 59-minute cap and paused signups, token pools, a name with three meanings.</span></div>
+      <div class="cheat-item"><b>Rung 4 is still your merge</b><span>Cloud agent pull requests must be reviewed and merged by a human. That is policy, not advice.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>The feature works. That is the easy half, and the half everybody photographs. Session 6 is the half that decides whether anyone thanks you for it: getting it merged without wrecking your team's delivery stability, telling a reviewer honestly which parts you did not write, and knowing what you now owe the next person who opens this file.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 5 of 6 · learn-ai-coding-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="06-shipping-safely.html">Next: Shipping safely →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

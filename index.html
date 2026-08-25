@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Six sessions, one real feature shipped. The honest course on AI coding: the famous slowdown study, the walk-back its own authors published, and a playground that really runs the code. Free, by Phoebe Fu.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Learn AI Coding with Phoebe">
+<meta property="og:description" content="Six sessions, one real feature. The famous slowdown study, the walk-back its authors published, and a playground that really runs the code.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learn AI Coding with Phoebe">
+<meta name="twitter:description" content="The honest course on AI coding. Real evidence, real execution.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Learn AI Coding with Phoebe</title>
+<link rel="stylesheet" href="assets/style.css?v=1">
+<style>
+
+  .stats-row { display: flex; gap: 2.4rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 2.1rem; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: .72rem; opacity: .85; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .course-card {
+    border: 1px solid var(--hairline);
+    border-top: 4px solid var(--diff, var(--indigo));
+    border-radius: var(--radius);
+    padding: 1.2rem 1.3rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+    transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease;
+    position: relative;
+  }
+  .course-card:hover { border-color: var(--indigo-soft); border-top-color: var(--diff, var(--indigo)); box-shadow: 0 8px 28px rgba(8,145,178,.14); transform: translateY(-3px); }
+  .course-card .cicon { font-size: 1.7rem; line-height: 1; }
+  .course-card .cnum { font-size: .72rem; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: .1em; }
+  .course-card h3 { font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+  .course-card p { font-size: .85rem; color: var(--muted); flex: 1; }
+  .course-card .meta { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+  .diff-legend { display: flex; gap: 1rem; margin-top: 1.6rem; font-size: .74rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .diff-legend i { display: inline-block; width: .85rem; height: .35rem; border-radius: 999px; margin-right: .35rem; vertical-align: middle; }
+
+  .paths { margin-top: 2.6rem; }
+  .paths h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .3rem; }
+  .paths .plede { color: var(--muted); font-size: .92rem; margin-bottom: .8rem; }
+  .path { display: flex; gap: .55rem; align-items: center; padding: .75rem 0; border-bottom: .5px solid var(--hairline); flex-wrap: wrap; }
+  .path:last-child { border-bottom: none; }
+  .path b { min-width: 15.5rem; font-size: .9rem; }
+  .path .pstep { background: var(--indigo-50); color: var(--indigo); border-radius: 999px; padding: .16rem .68rem; font-weight: 700; font-size: .8rem; text-decoration: none; transition: all .12s ease; }
+  .path .pstep:hover { background: var(--indigo); color: #fff; }
+  .path .parr { color: var(--faint); font-weight: 700; }
+
+  .mm-section { margin-top: 1.6rem; }
+  .mm-section h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .2rem; }
+  .mm-section .mm-lede { color: var(--muted); font-size: .92rem; margin-bottom: .4rem; }
+  .mm-wrap { border: 1px solid var(--hairline); border-radius: var(--radius); background: linear-gradient(180deg,#fff,#F4FAFC); padding: .6rem; overflow-x: auto; }
+  .mm-svg { width: 100%; height: auto; display: block; max-width: 60rem; margin: 0 auto; min-width: 34rem; }
+  .mm-link { cursor: pointer; text-decoration: none; }
+  .mm-node rect { transition: opacity .15s ease, filter .15s ease; }
+  .mm-node text { pointer-events: none; }
+  .mm-link:hover .mm-node rect { filter: brightness(1.06); }
+  .mm-edge { transition: opacity .15s ease; }
+
+  .hero-art { position: relative; margin: 1.8rem 0 0; border-radius: var(--radius); overflow: hidden; background: #0B1620; }
+  .hero-art img { display: block; width: 100%; height: auto; }
+  .hero-art figcaption {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 1.1rem 1.3rem;
+    background: linear-gradient(to top, rgba(11,22,32,.94), rgba(11,22,32,0));
+    color: #fff; font-size: .84rem; line-height: 1.6;
+  }
+  .hero-art figcaption b { color: #A5F3FC; }
+  @media (max-width: 720px) { .hero-art figcaption { position: static; background: #0B1620; } }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn with Phoebe · Applied AI</div>
+    <h1>Learn AI <span class="accent">Coding</span> with Phoebe</h1>
+    <p class="sub">Six sessions, 45 minutes each, and one real feature you ship through all of them. One well-known study measured experienced developers as nineteen percent slower with AI while those developers believed they had been twenty percent faster. Another measured fifty-six percent faster. Both are honest, and the researchers behind the first have since published a partial walk-back of their own headline. This course teaches you to read that, and then to work accordingly.</p>
+    <div class="stats-row">
+      <div class="stat"><b data-count="6">6</b><span>sessions</span></div>
+      <div class="stat"><b data-count="1">1</b><span>real feature shipped</span></div>
+      <div class="stat"><b data-count="5">5</b><span>tasks that really execute</span></div>
+      <div class="stat"><b data-count="4">4</b><span>documented injection CVEs</span></div>
+      <div class="stat"><b data-count="45">45</b><span>min per session</span></div>
+    </div>
+    <figure class="hero-art">
+      <img src="assets/hero.png" alt="A rack of small round status lamps in a dim server room, all lit steady cyan except one that is completely dark. A hand reaches toward the dark one, stopped just short of touching it.">
+      <figcaption><b>Everything is green except the one thing.</b> The job was never producing the code. It is noticing the part that is quietly not working.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>The six sessions 💻 <span style="font-size:.85rem;font-weight:600;color:var(--muted)">· one real feature, shipped across all of them</span></h2>
+      <p class="plede">Bring something genuine from your own backlog, small enough to finish in six sessions. By the end it is written, reviewed, secured and merged, and you know which parts of that you should have done differently.</p>
+    </div>
+
+    <div class="course-grid">
+      <a class="course-card" href="courses/01-the-honest-baseline.html" style="--diff:#34D399">
+        <span class="cicon">📐</span>
+        <span class="cnum">Session 1 · easy</span>
+        <h3>The honest baseline</h3>
+        <p>The 19 percent slowdown, the 55.8 percent speedup, and how both are true. Plus METR's own 2026 walk-back, and five real coding tasks that compile and run in your browser.</p>
+        <span class="meta"><span class="pill amber">▶ Start here</span></span>
+      </a>
+      <a class="course-card" href="courses/02-context-is-everything.html" style="--diff:#34D399">
+        <span class="cicon">🧠</span>
+        <span class="cnum">Session 2 · easy</span>
+        <h3>Context is everything</h3>
+        <p>The model only knows what is in front of it, and a long session quietly gets worse. What auto-compaction throws away, why the vendor tells you to clear between tasks, and what a context pack should contain.</p>
+        <span class="meta"><span class="pill">what it sees</span></span>
+      </a>
+      <a class="course-card" href="courses/03-the-review-problem.html" style="--diff:#FBBF24">
+        <span class="cicon">🔎</span>
+        <span class="cnum">Session 3 · medium</span>
+        <h3>The review problem</h3>
+        <p>Almost-right is the expensive kind: 45 percent of developers name it their top frustration and 66 percent spend more time fixing it. A reusable checklist for reading a diff, and where duplication creeps in.</p>
+        <span class="meta"><span class="pill">read the diff</span></span>
+      </a>
+      <a class="course-card" href="courses/04-security-and-supply-chain.html" style="--diff:#F87171">
+        <span class="cicon">🛡️</span>
+        <span class="cnum">Session 4 · hardest</span>
+        <h3>Security and supply chain</h3>
+        <p>People using AI wrote less secure code and were more confident it was secure. 205,474 hallucinated package names. Four documented prompt-injection CVEs up to 9.8, where the attacker never touched your editor.</p>
+        <span class="meta"><span class="pill">the heavy one</span></span>
+      </a>
+      <a class="course-card" href="courses/05-build-the-thing.html" style="--diff:#FB923C">
+        <span class="cicon">🛠️</span>
+        <span class="cnum">Session 5 · hands-on</span>
+        <h3>Build the thing</h3>
+        <p>The four tools as they actually are today, including the billing model that changed, the signups that are paused, and the fact that Codex has meant three different things. Then build with a stated permission posture.</p>
+        <span class="meta"><span class="pill">the real build</span></span>
+      </a>
+      <a class="course-card" href="courses/06-shipping-safely.html" style="--diff:#FB923C">
+        <span class="cicon">🚢</span>
+        <span class="cnum">Session 6 · hands-on</span>
+        <h3>Shipping safely</h3>
+        <p>AI now helps throughput and still hurts delivery stability. The control system is the deliverable. What you should never hand over, and how to measure your own numbers instead of quoting somebody else's.</p>
+        <span class="meta"><span class="pill amber">🔒 unlocks the ceiling</span></span>
+      </a>
+    </div>
+
+    <div class="diff-legend">
+      <span><i style="background:#34D399"></i>easy - everyone</span>
+      <span><i style="background:#FBBF24"></i>medium</span>
+      <span><i style="background:#FB923C"></i>hands-on</span>
+      <span><i style="background:#F87171"></i>hardest</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>Your passport 🎫</h2>
+      <p class="plede">Clear all three quiz questions in a session and it gets stamped. Stamps live in this browser only.</p>
+    </div>
+    <div class="pp-strip"></div>
+  </section>
+
+  <section class="section">
+    <div class="paths">
+      <h2>Choose your path 🗺️</h2>
+      <p class="plede">Three doors into the same conviction: the tool is genuinely useful, and the part that is still your job got more important rather than less.</p>
+      <div class="path"><b>🛡️ I care most about the risk</b>
+        <a class="pstep" href="courses/01-the-honest-baseline.html">1</a><span class="parr">→</span>
+        <a class="pstep" href="courses/04-security-and-supply-chain.html">4</a><span class="parr">→</span>
+        <a class="pstep" href="courses/06-shipping-safely.html">6</a>
+        <span style="font-size:.82rem;color:var(--muted)">the evidence, the attacks, then the control system</span>
+      </div>
+      <div class="path"><b>⚡ I want to be better at it tomorrow</b>
+        <a class="pstep" href="courses/02-context-is-everything.html">2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/03-the-review-problem.html">3</a><span class="parr">→</span>
+        <a class="pstep" href="courses/05-build-the-thing.html">5</a>
+        <span style="font-size:.82rem;color:var(--muted)">context, review, then the real build</span>
+      </div>
+      <div class="path"><b>💻 The whole journey</b>
+        <a class="pstep" href="courses/01-the-honest-baseline.html">1</a><span class="parr">→</span>
+        <a class="pstep" href="courses/02-context-is-everything.html">2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/03-the-review-problem.html">3</a><span class="parr">→</span>
+        <a class="pstep" href="courses/04-security-and-supply-chain.html">4</a><span class="parr">→</span>
+        <a class="pstep" href="courses/05-build-the-thing.html">5</a><span class="parr">→</span>
+        <a class="pstep" href="courses/06-shipping-safely.html">6</a>
+        <span style="font-size:.82rem;color:var(--muted)">one feature, from prompt to merged, with your own baseline</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>What is honest here 🧾</h2>
+      <p class="plede">Every number in this course is labelled by who funded it and what it actually measured.</p>
+    </div>
+    <table class="clean">
+      <tr><th>Claim</th><th>Status</th></tr>
+      <tr><td>Experienced developers were 19 percent slower</td><td>Independent RCT, 16 developers, 246 tasks. <strong>Partly walked back by its own authors in 2026</strong>, and this course teaches both halves</td></tr>
+      <tr><td>Developers were 55.8 percent faster</td><td>Vendor-funded, and a single greenfield toy task. Both facts stated on the page</td></tr>
+      <tr><td>People using AI write less secure code</td><td>Peer-reviewed, Stanford, ACM CCS 2023. They were also more confident it was secure</td></tr>
+      <tr><td>Slopsquatting is a real risk</td><td>Peer-reviewed hallucination rates, USENIX 2025. But the famous 30,000-download case was a researcher's benign proof of concept, and this course says so</td></tr>
+      <tr><td>The playground's pass and fail results</td><td>Real compilation and execution in your browser. The lever-to-code mapping is a teaching model and is labelled as one</td></tr>
+    </table>
+  </section>
+
+  <section class="section mm-section">
+    <h2>The knowledge map 🧠</h2>
+    <p class="mm-lede">The whole course at a glance - hover a session to spotlight its concepts, click any node to jump in.</p>
+    <div class="mm-wrap"><div id="mindmap"></div></div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>learn-ai-coding-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span>Pairs with <a href="https://phoebefu6.github.io/learn-ai-qa-with-phoebe/">Learn AI QA ↗</a> · source map: <span class="mono">materials/official-course-map.md</span></span>
+  </footer>
+
+</main>
+
+<script>
+window.MINDMAP_DATA = {
+  title: "Learn\nAI Coding",
+  centerColor: "#164E63",
+  sessions: [
+    { label: "The honest\nbaseline", href: "courses/01-the-honest-baseline.html", color: "#34D399",
+      concepts: [ { label: "Reading the evidence", href: "courses/01-the-honest-baseline.html" },
+        { label: "Felt vs measured", href: "courses/01-the-honest-baseline.html" },
+        { label: "Spec before prompt", href: "courses/01-the-honest-baseline.html" } ] },
+    { label: "Context is\neverything", href: "courses/02-context-is-everything.html", color: "#34D399",
+      concepts: [ { label: "What the model sees", href: "courses/02-context-is-everything.html" },
+        { label: "Compaction is lossy", href: "courses/02-context-is-everything.html" },
+        { label: "Clear between tasks", href: "courses/02-context-is-everything.html" } ] },
+    { label: "The review\nproblem", href: "courses/03-the-review-problem.html", color: "#FBBF24",
+      concepts: [ { label: "Almost right costs most", href: "courses/03-the-review-problem.html" },
+        { label: "A diff checklist", href: "courses/03-the-review-problem.html" },
+        { label: "Duplication creep", href: "courses/03-the-review-problem.html" } ] },
+    { label: "Security and\nsupply chain", href: "courses/04-security-and-supply-chain.html", color: "#F87171",
+      concepts: [ { label: "Confident and wrong", href: "courses/04-security-and-supply-chain.html" },
+        { label: "Hallucinated packages", href: "courses/04-security-and-supply-chain.html" },
+        { label: "Prompt injection CVEs", href: "courses/04-security-and-supply-chain.html" } ] },
+    { label: "Build the\nthing", href: "courses/05-build-the-thing.html", color: "#FB923C",
+      concepts: [ { label: "The four tools today", href: "courses/05-build-the-thing.html" },
+        { label: "Permission posture", href: "courses/05-build-the-thing.html" },
+        { label: "Cost per merged change", href: "courses/05-build-the-thing.html" } ] },
+    { label: "Shipping\nsafely", href: "courses/06-shipping-safely.html", color: "#FB923C",
+      concepts: [ { label: "Speed needs control", href: "courses/06-shipping-safely.html" },
+        { label: "Never hand this over", href: "courses/06-shipping-safely.html" },
+        { label: "Measure your own", href: "courses/06-shipping-safely.html" } ] }
+  ]
+};
+</script>
+<script src="assets/mindmap.js?v=1"></script>
+<script src="assets/app.js?v=1"></script>
+</body>
+</html>

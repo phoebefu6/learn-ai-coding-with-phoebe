@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 3 of 6. Reading the diff is the step everyone skips and the only one that catches what tests do not. A reusable review checklist, the duplication pattern to watch for in your own commits, and what the vendors themselves say about review.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="The review problem - learn ai coding with phoebe">
+<meta property="og:description" content="Session 3 of 6. Almost right is the expensive failure mode. Here is the checklist that finds it, and the duplication trend to watch for in your own diffs.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/courses/03-the-review-problem.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The review problem - learn ai coding with phoebe">
+<meta name="twitter:description" content="Session 3 of 6. 45 percent name almost-right code as their top frustration. This session is how you find it.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 3 · The review problem - learn ai coding with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ai-coding-with-phoebe</a> / Session 3 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn AI Coding with Phoebe · Session 3 of 6</div>
+    <h1>The review <span class="accent">problem</span></h1>
+    <p class="sub">Reading the diff is the step everyone skips, and it is the only step that catches the things tests do not. Not because your tests are bad, but because a test can only ask the questions someone already thought to ask. Tonight you get a checklist you will reuse for years, you run it on the code you actually wrote for your feature, and you find something. Everybody finds something. That is the point of the exercise, not a sign you did it wrong.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Medium</span>
+      <span class="chip audience">Anyone who codes as part of the job</span>
+      <span class="chip audience">Bring the diff from session 2</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Warm up</span>
+      <span class="a2" style="flex:4">3-20 · Why review is the whole job</span>
+      <span class="a3" style="flex:5">20-42 · Build-along: review your own diff</span>
+      <span class="a4" style="flex:1">42-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ PART 1 ============ -->
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the failure mode</span>
+      <h2>Almost right is the expensive kind</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Obviously wrong code is free. You look at it, you bin it, you have lost four seconds. Almost-right code costs you an unbounded amount of attention, because the only way to find the wrong part is to read all of it carefully enough that you would have noticed.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A six-point diff checklist you can apply to any change from any source, one real defect found in your own feature, and a halfway scorecard that tells you honestly where the build stands with three sessions to go.</p>
+    </div>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>What 49,000 developers say the problem actually is<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The Stack Overflow Developer Survey 2025 asked more than 49,000 developers what frustrates them about these tools. The top answer, named by <strong>45 percent</strong>, was not hallucination and not cost. It was <strong>"AI solutions that are almost right, but not quite."</strong></p>
+        <p>And <strong>66 percent said they spend more time fixing almost-right AI-generated code.</strong> Read those two together and you have the economics of this session. The failure mode people complain about is not the one that looks like failure.</p>
+        <p>It also explains a pattern you have probably felt. The tool is genuinely good, the output is genuinely plausible, and your afternoon still disappeared. Nothing broke loudly. You just spent two hours discovering which of the forty plausible lines was the wrong one.</p>
+      </div>
+    </details>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A quadrant of generated-code flaws: syntax errors and bad imports are easy to spot and cheap, while missed edge cases, off-by-one errors and reinvented helpers are hard to spot and expensive">
+        <style>
+          .c3aA { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+          .c3aL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c3aC { font: 700 12px Inter, sans-serif; fill: #164E63; }
+          .c3aR { font: 700 12px Inter, sans-serif; fill: #991B1B; }
+        </style>
+        <rect x="150" y="190" width="330" height="130" fill="#ECFEFF"/>
+        <rect x="480" y="60" width="330" height="130" fill="#FEF2F2"/>
+        <line x1="480" y1="60" x2="480" y2="320" stroke="#C2D5DC" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="150" y1="190" x2="810" y2="190" stroke="#C2D5DC" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="150" y1="60" x2="150" y2="320" stroke="#DDEAEF" stroke-width="2"/>
+        <line x1="150" y1="320" x2="810" y2="320" stroke="#DDEAEF" stroke-width="2"/>
+        <text class="c3aC" x="162" y="310">Cheap: you bin it in seconds</text>
+        <text class="c3aR" x="798" y="78" text-anchor="end">Expensive: you have to read it</text>
+        <circle cx="215" cy="292" r="7" fill="#0891B2"/>
+        <text class="c3aL" x="229" y="296">Syntax error</text>
+        <circle cx="300" cy="258" r="7" fill="#0891B2"/>
+        <text class="c3aL" x="286" y="262" text-anchor="end">Import that does not exist</text>
+        <circle cx="555" cy="178" r="7" fill="#991B1B"/>
+        <text class="c3aL" x="569" y="182">Off-by-one in a retry</text>
+        <circle cx="620" cy="140" r="7" fill="#991B1B"/>
+        <text class="c3aL" x="634" y="144">Edge case the spec named</text>
+        <circle cx="700" cy="100" r="7" fill="#991B1B"/>
+        <text class="c3aL" x="686" y="104" text-anchor="end">A helper that already existed</text>
+        <text class="c3aA" transform="rotate(-90 66 320)" x="66" y="320" text-anchor="start">What it costs you</text>
+        <text class="c3aA" x="160" y="344">Easy to spot</text>
+        <text class="c3aA" x="800" y="344" text-anchor="end">Hard to spot</text>
+        <text class="c3aA" x="60" y="390">Both halves are real output. Only the top right needs you, and only reading finds it.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the cheap failures are the ones that look like failures</figcaption>
+    </figure>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stack Overflow 2025: 80 percent use AI tools, 66 percent spend more time fixing almost-right code, 45 percent name it their top frustration, and 29 percent trust its accuracy">
+        <style>
+          .c3bL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c3bV { font: 800 13px Inter, sans-serif; fill: #0C1A22; }
+          .c3bN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <text class="c3bL" x="300" y="64" text-anchor="end">Use AI in their workflow</text>
+        <rect x="315" y="44" width="448" height="28" rx="6" fill="#0891B2"/>
+        <text class="c3bV" x="773" y="64">80%</text>
+        <text class="c3bL" x="300" y="116" text-anchor="end">More time fixing almost-right code</text>
+        <rect x="315" y="96" width="370" height="28" rx="6" fill="#991B1B"/>
+        <text class="c3bV" x="695" y="116">66%</text>
+        <text class="c3bL" x="300" y="168" text-anchor="end">Top frustration: almost right</text>
+        <rect x="315" y="148" width="252" height="28" rx="6" fill="#991B1B"/>
+        <text class="c3bV" x="577" y="168">45%</text>
+        <text class="c3bL" x="300" y="220" text-anchor="end">Trust its accuracy</text>
+        <rect x="315" y="200" width="162" height="28" rx="6" fill="#A5F3FC"/>
+        <text class="c3bV" x="487" y="220">29%</text>
+        <text class="c3bN" x="60" y="266">Stack Overflow Developer Survey 2025, more than 49,000 respondents.</text>
+        <text class="c3bN" x="60" y="288">Usage climbed and trust fell in the same year. Both numbers are about the same code.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - four in five use it, fewer than one in three trust it</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the checklist</span>
+      <h2>What to actually look for in a diff</h2>
+      <span class="tag concept">6 min live</span>
+    </div>
+    <p class="lede">"Review it properly" is useless advice because it does not tell you where to point your eyes. Six places, in this order, every time. It takes about four minutes on a normal change and it is the same six whether a person or a model wrote the code.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The six points, in the order they pay off<span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>1. The edge cases the spec named.</strong> Not all edge cases, the ones you wrote down in session 2. Empty input, the boundary value, the maximum. Open the spec next to the diff and tick them off one at a time. If you did not write a spec, this step is where you discover that.</p>
+        <p><strong>2. The error paths.</strong> Follow every call that can fail. What happens when it does? A surprising amount of generated code has a happy path and a shrug. Look for swallowed exceptions, an error logged and then ignored, and a failure that quietly returns a default the caller cannot distinguish from a real answer.</p>
+        <p><strong>3. The boundary conditions.</strong> Off by one, inclusive versus exclusive, the last element, the reversed range, the retry that runs one extra time. These are the classic almost-rights: the logic is correct in shape and wrong by exactly one.</p>
+        <p><strong>4. Every new import is a package that really exists.</strong> Not a package that sounds right. Look it up. This is thirty seconds per import and session 4 will explain why it is the single highest-value thirty seconds in this list.</p>
+        <p><strong>5. Did it invent a helper you already have?</strong> Search the codebase for the function it just wrote before you accept it. This is the failure you will find most often and the one nobody looks for, because a duplicate helper is not a bug in any sense your tests understand.</p>
+        <p><strong>6. Is the change bigger than the task needed?</strong> Extra abstraction, a config option nobody asked for, three files touched when one would do. Scope creep in a diff is not generous, it is surface area you now maintain.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>A data engineer asks for a retry wrapper. It comes back correct, readable, and it also adds a small caching layer "since you will probably want it". Nothing is wrong. Eight months later a stale cache causes an incident, and the person debugging it cannot find anybody who remembers asking for a cache. Point 6 is that story, prevented.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>How to read a diff when it is 400 lines<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The honest answer is that you often cannot, and the right move is upstream: ask for smaller changes. A four-hundred-line diff you skim is worse than four hundred lines you never generated, because now it is merged and it has your name on it.</p>
+        <p>When you are stuck with a large one, review in passes rather than top to bottom. First pass, imports and dependencies only. Second pass, error handling only. Third pass, the two or three functions that carry the actual logic. Skimming a whole diff once feels thorough and finds nothing. Reading a third of it three times with a single question in mind finds things.</p>
+        <div class="callout tip">
+          <p><strong>The tell that you are not really reviewing.</strong> If you have not paused on a single line, you are reading for shape rather than for meaning. A real review pass produces at least one question, even when the answer turns out to be fine.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3 ============ -->
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the duplication pattern</span>
+      <h2>Duplication instead of refactoring</h2>
+      <span class="tag concept">6 min live</span>
+    </div>
+    <p class="lede">Point 5 on the checklist deserves its own part, because there is measurement behind it. GitClear analysed 211 million changed lines authored between 2020 and 2024, and what they found is a shift in the shape of how code changes, not a claim about anyone's quality.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Moved lines fell from 24.1 percent of changed lines in 2020 to 9.5 percent in 2024 while copy pasted lines rose from 8.3 to 12.3 percent and overtook them">
+        <style>
+          .c3cH { font: 800 14px Inter, sans-serif; fill: #164E63; }
+          .c3cL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c3cV { font: 800 12px Inter, sans-serif; fill: #0C1A22; }
+          .c3cN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <rect x="60" y="28" width="370" height="190" rx="10" fill="#ECFEFF"/>
+        <rect x="450" y="28" width="370" height="190" rx="10" fill="#FEF2F2"/>
+        <text class="c3cH" x="245" y="52" text-anchor="middle">2020</text>
+        <text class="c3cH" x="635" y="52" text-anchor="middle">2024</text>
+        <text class="c3cL" x="80" y="88">Moved lines, the refactor signal</text>
+        <rect x="80" y="96" width="289" height="28" rx="6" fill="#0891B2"/>
+        <text class="c3cV" x="379" y="116">24.1%</text>
+        <text class="c3cL" x="80" y="158">Copy/pasted lines</text>
+        <rect x="80" y="166" width="100" height="28" rx="6" fill="#CA8A04"/>
+        <text class="c3cV" x="190" y="186">8.3%</text>
+        <text class="c3cL" x="470" y="88">Moved lines, the refactor signal</text>
+        <rect x="470" y="96" width="114" height="28" rx="6" fill="#0891B2"/>
+        <text class="c3cV" x="594" y="116">9.5%</text>
+        <text class="c3cL" x="470" y="158">Copy/pasted lines</text>
+        <rect x="470" y="166" width="148" height="28" rx="6" fill="#CA8A04"/>
+        <text class="c3cV" x="628" y="186">12.3%</text>
+        <text class="c3cN" x="60" y="250">GitClear, 211 million changed lines authored 2020 to 2024, independent of the AI vendors.</text>
+        <text class="c3cN" x="60" y="272">2024 was the first year they ever measured copy/pasted lines outnumbering moved lines.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the two bars swap places, and that swap is the story</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The numbers, and what they are and are not evidence of<span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Moved lines are the signature of refactoring. When you pull a block into a function and call it from three places, those lines move. GitClear measured moved lines falling from <strong>24.1 percent of changed lines in 2020 to 9.5 percent in 2024</strong>, while copy and pasted lines rose from <strong>8.3 to 12.3 percent</strong>. In their words, "2024 marked the first year GitClear has ever measured where the number of 'Copy/Pasted' lines exceeded the count of 'Moved' lines."</p>
+        <p>The sharper number is about individual commits. Commits containing a duplicate block of five lines or more went from <strong>0.45 percent in 2022 to 6.66 percent in 2024</strong>. That is roughly one commit in fifteen, up from one in two hundred.</p>
+        <div class="callout tip">
+          <p><strong>How to hold this honestly.</strong> GitClear is independent of the AI vendors, though it does sell code-analytics tooling, and a correlation across an industry is not a causal claim about your team. Teach it as a thing to watch for in your own diffs, not as a prophecy about the profession. The useful version is small and personal: this week, in your commits, did anything get extracted, or did everything get added?</p>
+        </div>
+        <p>The mechanism was in session 2, and it is not mysterious. An assistant that cannot see the file containing your helper cannot suggest reusing it. It suggests writing one. Multiply that by every task for a year and you get exactly this shape.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Finding duplication in your own repository<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Move</th><th>What it catches</th><th>When to do it</th></tr>
+          <tr><td>Search for the function name before accepting it</td><td>The helper that already exists under a slightly different name</td><td>Every single time, it takes ten seconds</td></tr>
+          <tr><td>Search for a distinctive line from the new block</td><td>The same logic copied rather than called</td><td>Any block over five lines</td></tr>
+          <tr><td>Ask what got extracted this week</td><td>A month of pure addition with no consolidation</td><td>Friday, five minutes, on your own commits</td></tr>
+          <tr><td>Give the model the file the helper lives in</td><td>The problem, before it happens</td><td>Every task, as part of the context pack</td></tr>
+        </table>
+        <p>The last row is the real fix. Reviewing for duplication is catching it late. The cheap version is making the existing helper visible at the moment you ask, which is the habit you built last session.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 4 ============ -->
+  <section class="section" id="part-4">
+    <div class="section-kicker">
+      <span class="klabel">Part 4 · covers the vendors' own words</span>
+      <h2>What the vendors say about review</h2>
+      <span class="tag concept">3 min live</span>
+    </div>
+    <p class="lede">You would expect the companies selling these tools to be the last people telling you to slow down and read. Their documentation says otherwise, in plain language, and that is worth more than any warning from a critic.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>GitHub and Anthropic, verbatim<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <div class="prompt-box good">
+          <span class="label">★ GitHub, responsible use documentation</span>
+"You should always carefully review and test code generated by Copilot."
+
+"Copilot code review should be supplemented with careful human code review."
+It should "supplement human reviews, not replace them."
+
+Copilot "may highlight problems in reviewed code that do not exist."
+        </div>
+        <p>That last line is the one people skip past, and it matters for how you use an AI reviewer. It produces false positives as well as misses, which means an automated review is a second opinion rather than a verdict. If you resolve its comments without thinking, you have added a step and removed a judgement.</p>
+        <div class="prompt-box good">
+          <span class="label">★ Anthropic, Claude Code security documentation</span>
+"Claude Code only has the permissions you grant it. You're responsible for
+reviewing proposed code and commands for safety before approval."
+        </div>
+        <p>Two vendors, two products, same sentence underneath. The responsibility does not transfer. It is worth saying out loud in a team setting, because the quiet assumption in most rooms is that somebody else, or something else, is checking.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Review your own diff, then hunt for duplication</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">Open the diff you brought from session 2 and the spec you wrote for it. Six points, then a duplication hunt. Everyone finds at least one thing. Finding two is normal and finding none usually means the pass was too fast.</p>
+
+    <div class="hotspot" data-title="Four places to look first, on a real diff">
+      <div class="hs-mock">
+        <svg viewBox="0 0 880 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A mock diff of a data loader showing a new import, an unchecked network call, an empty-input return and a helper that duplicates one already imported">
+          <style>
+            .c3dW { font: 700 12px Inter, sans-serif; fill: #fff; }
+            .c3dC { font: 400 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #0C1A22; }
+            .c3dG { font: 400 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #5B7480; }
+          </style>
+          <rect x="40" y="20" width="800" height="340" rx="10" fill="#fff" stroke="#DDEAEF" stroke-width="1.5"/>
+          <rect x="40" y="20" width="800" height="34" rx="10" fill="#164E63"/>
+          <rect x="40" y="44" width="800" height="10" fill="#164E63"/>
+          <text class="c3dW" x="60" y="42">diff · reports/loaders.py</text>
+          <rect x="40" y="54" width="50" height="306" fill="#ECFEFF"/>
+          <rect x="90" y="66" width="750" height="22" fill="#ECFEFF"/>
+          <text class="c3dG" x="58" y="82">12</text>
+          <text class="c3dC" x="100" y="82">+ import requests</text>
+          <text class="c3dG" x="58" y="108">13</text>
+          <text class="c3dG" x="100" y="108">  from .parsing import parse_row</text>
+          <text class="c3dG" x="58" y="134">14</text>
+          <rect x="90" y="144" width="750" height="22" fill="#ECFEFF"/>
+          <text class="c3dG" x="58" y="160">15</text>
+          <text class="c3dC" x="100" y="160">+ def load_monthly_usage(path):</text>
+          <rect x="90" y="170" width="750" height="22" fill="#ECFEFF"/>
+          <text class="c3dG" x="58" y="186">16</text>
+          <text class="c3dC" x="100" y="186">+     raw = requests.get(path).text</text>
+          <rect x="90" y="196" width="750" height="22" fill="#ECFEFF"/>
+          <text class="c3dG" x="58" y="212">17</text>
+          <text class="c3dC" x="100" y="212">+     rows = [split_row(l) for l in raw.splitlines()]</text>
+          <rect x="90" y="222" width="750" height="22" fill="#ECFEFF"/>
+          <text class="c3dG" x="58" y="238">18</text>
+          <text class="c3dC" x="100" y="238">+     return sum(r.total for r in rows)</text>
+          <rect x="90" y="274" width="750" height="22" fill="#ECFEFF"/>
+          <text class="c3dG" x="58" y="290">20</text>
+          <text class="c3dC" x="100" y="290">+ def split_row(line):</text>
+          <rect x="90" y="300" width="750" height="22" fill="#ECFEFF"/>
+          <text class="c3dG" x="58" y="316">21</text>
+          <text class="c3dC" x="100" y="316">+     return line.split(",")</text>
+        </svg>
+      </div>
+      <button class="hs-pin" style="--x:23%;--y:21%" data-title="The new import"
+              data-cap="Is that package real, and is it already a dependency here? Thirty seconds, every time."></button>
+      <button class="hs-pin" style="--x:38%;--y:48%" data-title="The error path"
+              data-cap="A failed request comes back as text like anything else. Nothing in this function notices."></button>
+      <button class="hs-pin" style="--x:34%;--y:61%" data-title="The boundary"
+              data-cap="An empty file returns zero, which the caller cannot tell from a real zero. Your spec called that an error."></button>
+      <button class="hs-pin" style="--x:29%;--y:76%" data-title="The new helper"
+              data-cap="parse_row is imported two lines above and already does this. Point 5, found by searching first."></button>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p><strong>Minutes 1 to 8 · the six points, in order.</strong> Spec open on one side, diff on the other. Edge cases, error paths, boundaries, imports, existing helpers, scope. Write each finding down as one line. Do not fix anything yet, because fixing breaks the pass.</p></div>
+      <div class="step"><p><strong>Minutes 9 to 14 · the duplication hunt.</strong> For every new function in the diff, search the codebase for its name and for one distinctive line from its body. Twice is a coincidence, three times is a helper you should have called.</p></div>
+      <div class="step"><p><strong>Minutes 15 to 18 · classify what you found.</strong> Split your findings into two piles: things a test would have caught, and things no test would ever catch. The second pile is why this session exists, and it is usually the bigger one.</p></div>
+      <div class="step"><p><strong>Minutes 19 to 22 · fix one, and note the rest.</strong> Fix the highest-value finding now. Put the others in a list. You are three sessions in with a real feature half built, which is exactly where you should be.</p></div>
+    </div>
+
+    <div class="stakes" data-base="180" data-unit="min/week of rework" data-lower-is-better="1"
+         data-title="Rework, and what actually moves it" data-foot="Directional, not measured. The trap has to cost something to be honest: 66 percent of developers report spending more time fixing almost-right code, and that time comes from somewhere.">
+      <label><input type="checkbox" data-delta="-45"> You read every diff against the spec you wrote, line by line</label>
+      <label><input type="checkbox" data-delta="-25"> You check that every new import is a package that really exists</label>
+      <label><input type="checkbox" data-delta="-20"> You search the repo for the helper before accepting a new one</label>
+      <label><input type="checkbox" data-delta="40" data-trap="1"> You accept the whole diff because the suite came back green</label>
+    </div>
+
+    <div class="scorecard" data-title="Halfway scorecard: your feature at session 3">
+      <div class="sc-row"><div class="sc-q">There is a written spec for this feature that you could hand to someone else
+        <em>Half marks for bullets in a scratch file. It counts if it exists outside your head.</em></div></div>
+      <div class="sc-row"><div class="sc-q">You can name the three files that matter, without opening the repo
+        <em>If not, that is a five-minute fix tonight, not a failure.</em></div></div>
+      <div class="sc-row"><div class="sc-q">You have read every line you have merged so far
+        <em>Honestly. Most people score one here at the halfway point, and that is what halfway means.</em></div></div>
+      <div class="sc-row"><div class="sc-q">Nothing in the diff duplicates something the codebase already had
+        <em>You only know this if you searched. Not searching scores zero, not one.</em></div></div>
+      <div class="sc-row"><div class="sc-q">The feature is smaller than it was when you picked it, or the same size
+        <em>Growing scope is the most common halfway problem, and it is easy to reverse now.</em></div></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 4</h2>
+      <span class="tag exercise">25 min</span>
+    </div>
+    <ol>
+      <li><strong>Run the six points on one change a day for a week.</strong> Yours or a colleague's, generated or hand-written. The checklist is not an AI checklist, and using it on human code is how it becomes a habit rather than a ritual.</li>
+      <li><strong>Keep a findings tally.</strong> Two columns: caught by a test, caught only by reading. After a week, the ratio between those columns is the most useful number you will produce in this course.</li>
+      <li><strong>Do one duplication sweep.</strong> Pick the file you have changed most this month and look for two functions that do nearly the same thing. Extracting one of them is a good use of twenty minutes.</li>
+      <li><strong>Verify every import in your feature.</strong> Every one, by looking it up rather than by recognising the name. Bring the list to session 4, because session 4 is about exactly what happens when one of them is not real.</li>
+      <li><strong>Optional.</strong> Read GitHub's responsible use page on agents. It is short, and reading a vendor tell you to supplement its review with careful human review lands differently in their words than in mine.</li>
+    </ol>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 3 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Why is almost-right code more expensive than obviously wrong code?</p>
+      <button class="qopt" type="button">A · It takes the model longer to generate, so you wait longer for it</button>
+      <button class="qopt" type="button">B · Obviously wrong code is discarded in seconds, while almost-right code has to be read carefully enough to find the part that is not right</button>
+      <button class="qopt" type="button">C · It usually fails the build, and build failures are slow to diagnose</button>
+      <p class="qwhy">45 percent of developers in the Stack Overflow 2025 survey named "AI solutions that are almost right, but not quite" as their top frustration, and 66 percent report spending more time fixing it. The cost is attention, not compute.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · GitClear measured moved lines falling from 24.1 to 9.5 percent while copy/paste rose from 8.3 to 12.3 percent between 2020 and 2024. What is the right way to read that?</p>
+      <button class="qopt" type="button">A · It proves AI assistants caused a measurable drop in code quality across the industry</button>
+      <button class="qopt" type="button">B · It shows refactoring became technically harder to perform in modern languages</button>
+      <button class="qopt" type="button">C · The signature of refactoring shrank while duplication grew, and 2024 was the first year copy/paste overtook it. Watch for it in your own diffs, do not treat it as proof of cause.</button>
+      <p class="qwhy">GitClear is independent of the AI vendors and the measurement is real, across 211 million changed lines. An industry-wide correlation is still not a causal claim about your team. The personal version is the useful one: did anything get extracted this week, or did everything get added?</p>
+    </div>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · What does GitHub's own documentation say about Copilot code review?</p>
+      <button class="qopt" type="button">A · It replaces human review once a team has been trained on it</button>
+      <button class="qopt" type="button">B · It should supplement human review rather than replace it, and it may highlight problems that do not exist</button>
+      <button class="qopt" type="button">C · It catches all problems in changes that are small and simple</button>
+      <p class="qwhy">Verbatim: "Copilot code review should be supplemented with careful human code review", it should "supplement human reviews, not replace them", and it "may highlight problems in reviewed code that do not exist". Anthropic's version is the same idea: you are responsible for reviewing proposed code and commands before approval.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ OFFICIAL COVERAGE ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Stack Overflow Developer Survey 2025</span><span class="note">More than 49,000 respondents. The 45 percent almost-right frustration, the 66 percent rework figure, 80 percent usage and 29 percent trust, taught as one picture</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">GitClear, February 2025</span><span class="note">Moved lines 24.1 to 9.5 percent, copy/paste 8.3 to 12.3, the first crossover year, and duplicate-block commits from 0.45 to 6.66 percent, with the independence and the limits of the claim stated</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">GitHub responsible use documentation</span><span class="note">Always review and test generated code, supplement human review rather than replace it, and the false-positive warning that changes how you treat an automated reviewer</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic Claude Code security documentation</span><span class="note">You are responsible for reviewing proposed code and commands for safety before approval. Session 4 picks this up in full</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Official Copilot code review modules</span><span class="note">Positioned here, not taught. They cover how to run the feature. This session covers what to do with what it gives you, and what it misses</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Full source map with every URL: <span class="mono">materials/official-course-map.md</span> in this repo. Certificates, videos and assessments stay with the official providers.</p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>The six points, in order</b><span>Named edge cases, error paths, boundaries, every new import, an existing helper, scope creep.</span></div>
+      <div class="cheat-item"><b>Almost right is the expensive one</b><span>45 percent call it their top frustration, 66 percent spend more time fixing it. Obvious failures are free.</span></div>
+      <div class="cheat-item"><b>Search before you accept</b><span>Ten seconds for the function name, ten more for a distinctive line. It is the finding nobody looks for.</span></div>
+      <div class="cheat-item"><b>Watch your own moved-versus-added ratio</b><span>Industry-wide, moved lines went 24.1 to 9.5 while copy/paste went 8.3 to 12.3. Check your own week.</span></div>
+      <div class="cheat-item"><b>Passes, not skims</b><span>Imports only, then error handling only, then the real logic. Three narrow reads beat one wide one.</span></div>
+      <div class="cheat-item"><b>The responsibility does not transfer</b><span>Both vendors write it down. An automated reviewer is a second opinion, not a verdict.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>Point 4 on tonight's checklist took you thirty seconds per import and probably felt like the most pedantic one. Session 4 is the reason it is on the list at all: an import that does not exist is not a typo, it is an address somebody else can move into. Bring the list you verified for homework.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 3 of 6 · learn-ai-coding-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="02-context-is-everything.html">← Previous: Context is everything</a> &nbsp;·&nbsp; <a href="04-security-and-supply-chain.html">Next: Security and supply chain →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

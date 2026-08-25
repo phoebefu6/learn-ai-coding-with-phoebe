@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 6 of 6. DORA measured roughly 5,000 professionals: AI now helps throughput and still hurts delivery stability. Speed without a control system is just faster instability. Build the control system, then ship the feature.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Shipping safely - learn ai coding with phoebe">
+<meta property="og:description" content="Session 6 of 6. The control system that turns speed into shipped value, what you never hand over, and the habit of measuring your own codebase.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/courses/06-shipping-safely.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shipping safely - learn ai coding with phoebe">
+<meta name="twitter:description" content="Session 6 of 6. AI does not fix a team, it amplifies what is already there. Build the control system, then merge.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 6 · Shipping safely - learn ai coding with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ai-coding-with-phoebe</a> / Session 6 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn AI Coding with Phoebe · Session 6 of 6</div>
+    <h1>Shipping <span class="accent">safely</span></h1>
+    <p class="sub">Five sessions built a feature. Tonight you merge it, and you build the thing that decides whether merging it was a good idea. DORA measured roughly five thousand professionals and found that AI now helps throughput and still hurts delivery stability, for one reason: acceleration exposes whatever was already weak downstream. Speed without a control system is not speed. It is faster instability, arriving sooner.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Hands-on</span>
+      <span class="chip audience">Anyone who codes as part of the job</span>
+      <span class="chip audience">The last session - tonight it merges</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Where you are</span>
+      <span class="a2" style="flex:4">3-18 · The control system</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: ship it</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where you are now</h2>
+    </div>
+    <p class="lede">You have a real feature, written over five sessions, sitting on a branch. The only question left is the one this whole course was built around: <strong>does merging it make your codebase better or worse?</strong> That question has a team-scale answer, and it is not about your keyboard.</p>
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your final passport slot</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+    </div>
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A merged feature, a checklist you can run before every merge for the rest of your career, an honest list of what you never hand over, and a measurement habit that outlives every number quoted in this course.</p>
+    </div>
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Why the last session is about your team, not your keyboard<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Sessions 1 through 5 were about what happens between you and the model. This one is about what happens after you accept the suggestion: the review, the tests, the branch, the merge, and the pager at two in the morning.</p>
+        <p>That is where the largest body of evidence in this field lives, and it says something uncomfortable. These tools are now measurably good for how much you ship, and still measurably bad for whether what you ship stays up. The difference between those two outcomes is not the model. It is what you built around it.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 1 ============ -->
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers DORA 2025</span>
+      <h2>Ninety percent use it, thirty percent do not trust it</h2>
+      <span class="tag concept">7 min live</span>
+    </div>
+    <p class="lede">DORA's 2025 report, "State of AI-assisted Software Development", surveyed roughly 5,000 professionals. Three of its numbers, held together, are the spine of this session.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DORA 2025 found 90 percent use AI at work, over 80 percent believe it increased their productivity, and 30 percent report little or no trust in the code it generates">
+        <style>
+          .c6aA-h { font: 700 12px Inter, sans-serif; fill: #164E63; }
+          .c6aA-l { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c6aA-v { font: 800 13px Inter, sans-serif; fill: #fff; }
+          .c6aA-r { font: 800 13px Inter, sans-serif; fill: #991B1B; }
+          .c6aA-n { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <text class="c6aA-h" x="20" y="36">DORA 2025 · roughly 5,000 professionals</text>
+        <rect x="270" y="70" width="480" height="30" rx="6" fill="#ECFEFF"/>
+        <rect x="270" y="70" width="432" height="30" rx="6" fill="#0891B2"/>
+        <text class="c6aA-l" x="250" y="90" text-anchor="end">Use AI at work</text>
+        <text class="c6aA-v" x="692" y="90" text-anchor="end">90%</text>
+        <rect x="270" y="130" width="480" height="30" rx="6" fill="#ECFEFF"/>
+        <rect x="270" y="130" width="384" height="30" rx="6" fill="#06B6D4"/>
+        <text class="c6aA-l" x="250" y="150" text-anchor="end">Believe it increased output</text>
+        <text class="c6aA-v" x="644" y="150" text-anchor="end">80%+</text>
+        <rect x="270" y="190" width="480" height="30" rx="6" fill="#ECFEFF"/>
+        <rect x="270" y="190" width="144" height="30" rx="6" fill="#991B1B"/>
+        <text class="c6aA-l" x="250" y="210" text-anchor="end">Little or no trust in the code</text>
+        <text class="c6aA-r" x="424" y="210">30%</text>
+        <text class="c6aA-n" x="20" y="262">Ninety percent use it. Thirty percent do not trust what it writes. Both are true at once.</text>
+        <text class="c6aA-n" x="20" y="284">DORA publishes the direction of these relationships, not the effect sizes. Direction only.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - adoption is near universal and trust is not</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The pivot from 2024, and the sentence underneath it<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The 2025 report changed its own position on throughput. In DORA's words, "we observe a positive relationship between AI adoption on both software delivery throughput and product performance". That is new, and it is good news. The same sentence keeps going: "However, AI adoption does continue to have a <strong>negative relationship with software delivery stability</strong>."</p>
+        <div class="prompt-box good">
+          <span class="label">★ DORA 2025, the mechanism, verbatim</span>
+"AI accelerates software development, but that acceleration can expose
+weaknesses downstream. Without robust control systems, like strong
+automated testing, mature version control practices, and fast feedback
+loops, an increase in change volume leads to instability."
+        </div>
+        <p>Read that as an engineering statement rather than a caution. It names the input, the failure mode, and the three things that prevent it. That is a specification for what you build tonight.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The line to build the whole session around<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <div class="callout tip">
+          <p><strong>"AI doesn't fix a team; it amplifies what's already there."</strong> DORA, 2025.</p>
+        </div>
+        <p>This explains every contradiction in the course at once. A team with a suite that asserts, small diffs and fast feedback gets amplified into shipping more. A team without those gets amplified into more incidents. Same tool, same prompts, opposite outcome. It also makes "should we adopt AI" the wrong question for a lead to ask. The honest version is <em>what is already true about how we ship, and do we want more of it?</em></p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the control system</span>
+      <h2>The control system is the deliverable</h2>
+      <span class="tag concept">6 min live</span>
+    </div>
+    <p class="lede">DORA named four things: automated testing, version control practices, fast feedback, and the change volume sitting on top of them. Here is what each one means when you are the one merging.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A stack showing AI acceleration at the base with version control, automated testing and fast feedback above it, feeding either shipped value or instability">
+        <style>
+          .c6bA-t { font: 700 12px Inter, sans-serif; fill: #164E63; }
+          .c6bA-w { font: 700 13px Inter, sans-serif; fill: #fff; }
+          .c6bA-d { font: 700 13px Inter, sans-serif; fill: #0C1A22; }
+          .c6bA-g { font: 700 13px Inter, sans-serif; fill: #164E63; }
+          .c6bA-r { font: 700 13px Inter, sans-serif; fill: #991B1B; }
+          .c6bA-s { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <defs>
+          <marker id="c6bA-ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#5B7480"/></marker>
+        </defs>
+        <text class="c6bA-t" x="40" y="34">The control system, in DORA's own list</text>
+        <rect x="40" y="48" width="300" height="40" rx="8" fill="#A5F3FC"/>
+        <text class="c6bA-d" x="190" y="73" text-anchor="middle">Fast feedback loops</text>
+        <rect x="40" y="98" width="300" height="40" rx="8" fill="#06B6D4"/>
+        <text class="c6bA-d" x="190" y="123" text-anchor="middle">Strong automated testing</text>
+        <rect x="40" y="148" width="300" height="40" rx="8" fill="#0891B2"/>
+        <text class="c6bA-w" x="190" y="173" text-anchor="middle">Mature version control</text>
+        <rect x="40" y="198" width="300" height="40" rx="8" fill="#164E63"/>
+        <text class="c6bA-w" x="190" y="223" text-anchor="middle">AI acceleration</text>
+        <line x1="352" y1="150" x2="508" y2="112" stroke="#5B7480" stroke-width="1.5" marker-end="url(#c6bA-ar)"/>
+        <line x1="352" y1="200" x2="508" y2="200" stroke="#5B7480" stroke-width="1.5" marker-end="url(#c6bA-ar)"/>
+        <rect x="520" y="78" width="320" height="64" rx="8" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+        <text class="c6bA-g" x="680" y="104" text-anchor="middle">Stack intact</text>
+        <text class="c6bA-s" x="680" y="124" text-anchor="middle">change volume becomes shipped value</text>
+        <rect x="520" y="168" width="320" height="64" rx="8" fill="#FEF2F2" stroke="#991B1B" stroke-width="1.5"/>
+        <text class="c6bA-r" x="680" y="194" text-anchor="middle">Stack missing</text>
+        <text class="c6bA-s" x="680" y="214" text-anchor="middle">change volume becomes instability</text>
+        <text class="c6bA-s" x="40" y="264">Same speed at the top of the stack. What sits underneath decides which box you land in.</text>
+        <text class="c6bA-s" x="40" y="286">None of this is new practice. The tool did not invent the discipline it turns out to need.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the stack is old, only the volume arriving on top of it is new</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Tests that assert, not tests that merely execute<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Session 1 ended with a playground that scored five out of five while shipping four real defects. Its final form: <strong>a green suite proves the tests ran, not that the code is right.</strong> Coverage measures execution. Assertion measures belief. The failure mode is documented: tests generated after faulty code detect roughly 14 percent of faults against roughly 25 percent for tests generated independently, because "incorrect implementations and tests are mutually consistent, masking defects rather than revealing them". The test agreed with the bug.</p>
+        <div class="callout example">
+          <span class="ex-pill">Go deeper</span>
+          <p>This is a discipline with its own course: <strong>learn-ai-qa-with-phoebe</strong>. It exists because the check you need here cannot be done by reading a pass count. Its playground scores the same shape of suite with real mutation testing, which is the only cheap way to find out whether your assertions would notice if the code were wrong. If you take one thing after tonight, take that.</p>
+        </div>
+      </div>
+    </details>
+
+    <div class="wipe" data-title="The same feature, two shapes of diff" data-label-a="One giant diff"
+         data-label-b="Four small diffs" data-foot="Drag right to left. Nothing about the feature changed. Only whether a human can actually read it.">
+      <div class="wipe-a">
+        <p>One pull request. 1,400 lines across 23 files, generated in one pass and accepted in one pass.</p>
+        <p>The reviewer opens it, scrolls, and approves, because reading it properly would take an afternoon nobody has this week. The approval is real. The review is not.</p>
+      </div>
+      <div class="wipe-b">
+        <p>Four pull requests. The largest is 180 lines, and each one does exactly one thing.</p>
+        <p>Every title can be checked against its own diff, and each is read end to end in under ten minutes. Same feature, same day, and now the approval means something.</p>
+      </div>
+    </div>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Version control hygiene, and why it matters more now<span class="mini">5 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>One logical change per commit.</strong> When change volume rises, bisect is the tool that saves you, and bisect is only as good as your commit boundaries.</li>
+          <li><strong>A message that says why, not what.</strong> The diff already says what. In six months the only person who can reconstruct why is the one who wrote it down.</li>
+          <li><strong>Branch, never straight to main.</strong> Especially when an agent is doing the typing, because the cost of a bad revert scales with volume.</li>
+          <li><strong>Read the diff, not the summary of the diff.</strong> The summary was written by the same thing that wrote the code.</li>
+        </ul>
+        <div class="prompt-box bad">
+          <span class="label">✗ What skipping the read actually looks like</span>
+git add . &amp;&amp; git commit -m "fix stuff" &amp;&amp; git push
+# 23 files staged, none of them opened
+        </div>
+        <div class="prompt-box good">
+          <span class="label">★ Ninety seconds that pay for themselves</span>
+git diff --stat          # is this diff smaller than ~200 lines?
+git diff                 # read it, every hunk, out loud if needed
+git diff --stat main...  # what did the whole branch touch?
+        </div>
+      </div>
+    </details>
+
+    <div class="stakes" data-base="100" data-unit="% of changes that land cleanly" data-lower-is-better="0" data-title="What the control system is actually worth" data-foot="Directional, built from DORA's own list of control systems. The point is which levers are real, not the decimals.">
+      <label><input type="checkbox" data-delta="-22"> No automated suite the change has to pass before it can merge</label>
+      <label><input type="checkbox" data-delta="-14"> Diffs so large that nobody reads them end to end</label>
+      <label><input type="checkbox" data-delta="-11"> Feedback that arrives days after the merge instead of minutes</label>
+      <label><input type="checkbox" data-delta="-8"> Commit boundaries loose enough that bisect cannot help you</label>
+      <label><input type="checkbox" data-delta="9" data-trap="0"> A human reviews and merges every generated change</label>
+    </div>
+  </section>
+
+  <!-- ============ PART 3 ============ -->
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers what the vendors themselves say</span>
+      <h2>What you never hand over</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Not a policy handed down by a security team. A list you can defend, where every line is backed by the vendor's own documentation. When the company selling you the autonomy writes down its limits, that is worth more than any independent warning.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A quadrant of blast radius against how hard a change is to undo, showing which work is safe to hand over and which is never handed over">
+        <style>
+          .c6cA-z { font: 700 13px Inter, sans-serif; }
+          .c6cA-i { font: 400 12px Inter, sans-serif; fill: #0C1A22; }
+          .c6cA-a { font: 600 12px Inter, sans-serif; fill: #5B7480; }
+          .c6cA-n { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <rect x="140" y="60" width="330" height="130" fill="#FEF9E7"/>
+        <rect x="470" y="60" width="330" height="130" fill="#FEF2F2"/>
+        <rect x="140" y="190" width="330" height="130" fill="#ECFEFF"/>
+        <rect x="470" y="190" width="330" height="130" fill="#FEF9E7"/>
+        <rect x="140" y="60" width="660" height="260" fill="none" stroke="#C2D5DC" stroke-width="1.5"/>
+        <line x1="470" y1="60" x2="470" y2="320" stroke="#C2D5DC" stroke-width="1.5"/>
+        <line x1="140" y1="190" x2="800" y2="190" stroke="#C2D5DC" stroke-width="1.5"/>
+        <text class="c6cA-z" x="160" y="86" fill="#3A2A00">Slow down and read it twice</text>
+        <text class="c6cA-i" x="160" y="114">A schema change with no rollback path</text>
+        <text class="c6cA-i" x="160" y="140">A one-way backfill over live rows</text>
+        <text class="c6cA-i" x="160" y="166">Anything you cannot cheaply revert</text>
+        <text class="c6cA-z" x="490" y="86" fill="#991B1B">Never hand this over</text>
+        <text class="c6cA-i" x="490" y="114">Auth, secrets, security-sensitive code</text>
+        <text class="c6cA-i" x="490" y="140">Money, payments, personal data</text>
+        <text class="c6cA-i" x="490" y="166">Migrations and destructive operations</text>
+        <text class="c6cA-z" x="160" y="216" fill="#164E63">Draft it, then read the diff</text>
+        <text class="c6cA-i" x="160" y="244">Local refactor with tests around it</text>
+        <text class="c6cA-i" x="160" y="270">Unit tests you then read line by line</text>
+        <text class="c6cA-i" x="160" y="296">Docstrings, fixtures, boilerplate</text>
+        <text class="c6cA-z" x="490" y="216" fill="#3A2A00">Get a second pair of eyes</text>
+        <text class="c6cA-i" x="490" y="244">A new dependency added to the build</text>
+        <text class="c6cA-i" x="490" y="270">A public API signature change</text>
+        <text class="c6cA-i" x="490" y="296">Anything that touches every caller</text>
+        <text class="c6cA-a" x="470" y="352" text-anchor="middle">Blast radius, contained on the left, wide on the right</text>
+        <text class="c6cA-a" transform="rotate(-90 118 320)" x="118" y="320" text-anchor="start">Harder to undo, going up</text>
+        <text class="c6cA-n" x="20" y="384">The fifth one is not on this grid: the decision about what to build is never handed over.</text>
+        <text class="c6cA-n" x="20" y="406">All three vendors agree you remain responsible for reviewing the output before approval.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - blast radius and reversibility decide it, not how clever the code looks</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The vendors' own words, quoted rather than paraphrased<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Vendor</th><th>What they wrote</th><th>What it means for the list</th></tr>
+          <tr><td>Anthropic</td><td>"You're responsible for reviewing proposed code and commands for safety before approval."</td><td>No permission mode transfers that. Approval is an act you perform, not a setting you choose</td></tr>
+          <tr><td>GitHub</td><td>"You should always carefully review and test code generated by Copilot."</td><td>Always, not usually. Review is paired with test, because reading alone misses the runtime</td></tr>
+          <tr><td>GitHub</td><td>"Draft pull requests created by Copilot cloud agent must be reviewed and merged by a human."</td><td>The strongest one, because it is a product constraint rather than advice. A human closes the loop</td></tr>
+          <tr><td>OpenAI</td><td><span class="mono">danger-full-access</span> is labelled <strong>"not recommended"</strong></td><td>The vendor named the mode after the risk. That is as clear as documentation ever gets</td></tr>
+        </table>
+        <p>None of these are about the model being weak. They are about where responsibility sits, which is why each one is a sentence you can quote in a review conversation without sounding like the person who is against progress.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The fifth item, which is not a security control<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Four items on the list are about damage. The fifth is not. <strong>The decision about what to build is never handed over</strong>, and it belongs on the same list because it fails the same way: quietly, and only visibly much later. An assistant will happily implement the feature you described. It has no way of knowing that the feature should not exist, that the ticket describes a symptom rather than a cause, or that the right change is to delete something instead.</p>
+        <div class="callout tip">
+          <p><strong>A cheap habit.</strong> Before you open the assistant, write one sentence naming who is worse off if this feature does not exist. If you cannot write it, you have found something more useful than a fast implementation.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 4 ============ -->
+  <section class="section" id="part-4">
+    <div class="section-kicker">
+      <span class="klabel">Part 4 · covers licence and attribution</span>
+      <h2>Licence and attribution, handled carefully</h2>
+      <span class="tag concept">3 min live</span>
+    </div>
+    <p class="lede">Short section, handled precisely, because this is an area where confident claims outnumber verifiable ones. Only what the documentation actually says.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A decision tree showing what happens when a suggestion matches public code, with the blocking filter on or off, and code referencing showing a licence type or NOASSERTION">
+        <style>
+          .c6dA-w { font: 700 13px Inter, sans-serif; fill: #fff; }
+          .c6dA-d { font: 700 13px Inter, sans-serif; fill: #0C1A22; }
+          .c6dA-o { font: 700 13px Inter, sans-serif; fill: #3A2A00; }
+          .c6dA-r { font: 700 13px Inter, sans-serif; fill: #991B1B; }
+          .c6dA-s { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <defs>
+          <marker id="c6dA-ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#5B7480"/></marker>
+        </defs>
+        <rect x="310" y="26" width="260" height="38" rx="8" fill="#164E63"/>
+        <text class="c6dA-w" x="440" y="50" text-anchor="middle">A suggestion matches public code</text>
+        <path d="M440,64 L440,84 L200,84 L200,98" fill="none" stroke="#5B7480" stroke-width="1.5" marker-end="url(#c6dA-ar)"/>
+        <path d="M440,64 L440,84 L680,84 L680,98" fill="none" stroke="#5B7480" stroke-width="1.5" marker-end="url(#c6dA-ar)"/>
+        <rect x="70" y="100" width="260" height="56" rx="8" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+        <text class="c6dA-d" x="200" y="124" text-anchor="middle">Blocking filter ON</text>
+        <text class="c6dA-s" x="200" y="143" text-anchor="middle">withheld before you see it</text>
+        <rect x="550" y="100" width="260" height="56" rx="8" fill="#FEF9E7" stroke="#CA8A04" stroke-width="1.5"/>
+        <text class="c6dA-o" x="680" y="124" text-anchor="middle">Blocking filter OFF</text>
+        <text class="c6dA-s" x="680" y="143" text-anchor="middle">code referencing shows the match</text>
+        <path d="M680,156 L680,184 L560,184 L560,206" fill="none" stroke="#5B7480" stroke-width="1.5" marker-end="url(#c6dA-ar)"/>
+        <path d="M680,156 L680,184 L790,184 L790,206" fill="none" stroke="#5B7480" stroke-width="1.5" marker-end="url(#c6dA-ar)"/>
+        <rect x="450" y="208" width="220" height="56" rx="8" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+        <text class="c6dA-d" x="560" y="232" text-anchor="middle">Licence type shown</text>
+        <text class="c6dA-s" x="560" y="251" text-anchor="middle">comply with it, or drop it</text>
+        <rect x="690" y="208" width="160" height="56" rx="8" fill="#FEF2F2" stroke="#991B1B" stroke-width="1.5"/>
+        <text class="c6dA-r" x="770" y="232" text-anchor="middle">NOASSERTION</text>
+        <text class="c6dA-s" x="770" y="251" text-anchor="middle">no licence found</text>
+        <text class="c6dA-s" x="20" y="296">GitHub notes the cloud agent may still match public sources despite blocking policies.</text>
+        <text class="c6dA-s" x="20" y="318">Unknown is not the same as permissive, and a setting is not the same as a guarantee.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the filter is a setting, the responsibility is not</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What is documented, and where the documentation stops<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Copilot can be configured to block suggestions matching public code.</strong> It is a setting, and somebody has to have turned it on.</li>
+          <li><strong>Code referencing shows the licence type</strong> of the matching code, or <span class="mono">NOASSERTION</span> when no licence is found. Treat <span class="mono">NOASSERTION</span> as unknown, not as free.</li>
+          <li><strong>GitHub's own limitation note:</strong> the cloud agent "may generate code matching publicly available sources despite blocking policies". The vendor is telling you the filter is not a guarantee.</li>
+        </ul>
+        <div class="callout tip">
+          <p><strong>On the litigation.</strong> <em>Doe v. GitHub</em> is on appeal, with no ruling as of August 2026. That is the whole of what this course will say. Anyone offering you a confident prediction about the outcome, in either direction, is offering an opinion dressed as a fact, and you now know how to tell the difference.</p>
+        </div>
+        <p>One more thing this course will not do: quote a duplication-filter threshold in lexemes or characters. That number circulates widely and it is not on the documentation page, so it does not belong in your head as a fact.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 5 ============ -->
+  <section class="section" id="part-5">
+    <div class="section-kicker">
+      <span class="klabel">Part 5 · covers reading the evidence</span>
+      <h2>The honest closing on the evidence</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">This course opened with the most-cited number in the field. It closes by returning to it, because what happened to that number is the most transferable thing here.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A timeline from the 2025 slowdown finding to the 2026 revision whose intervals cross zero, ending with your own measurement">
+        <style>
+          .c6eA-d { font: 700 11px Inter, sans-serif; fill: #5B7480; }
+          .c6eA-l { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c6eA-b { font: 700 10px Inter, sans-serif; fill: #fff; letter-spacing: .04em; }
+          .c6eA-n { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <line x1="140" y1="120" x2="740" y2="120" stroke="#DDEAEF" stroke-width="2"/>
+        <circle cx="140" cy="120" r="7" fill="#0891B2"/>
+        <text class="c6eA-d" x="140" y="102" text-anchor="middle">2025-07</text>
+        <rect x="92" y="132" width="96" height="18" rx="9" fill="#0891B2"/>
+        <text class="c6eA-b" x="140" y="145" text-anchor="middle">PUBLISHED</text>
+        <text class="c6eA-l" x="140" y="170" text-anchor="middle">16 devs, 246 tasks</text>
+        <text class="c6eA-l" x="140" y="186" text-anchor="middle">measured 19% slower</text>
+        <circle cx="440" cy="120" r="7" fill="#CA8A04"/>
+        <text class="c6eA-d" x="440" y="102" text-anchor="middle">2026-02</text>
+        <rect x="392" y="132" width="96" height="18" rx="9" fill="#CA8A04"/>
+        <text class="c6eA-b" x="440" y="145" text-anchor="middle">REVISED</text>
+        <text class="c6eA-l" x="440" y="170" text-anchor="middle">57 devs, 800+ tasks</text>
+        <text class="c6eA-l" x="440" y="186" text-anchor="middle">intervals cross zero</text>
+        <circle cx="740" cy="120" r="7" fill="#164E63"/>
+        <text class="c6eA-d" x="740" y="102" text-anchor="middle">your turn</text>
+        <rect x="692" y="132" width="96" height="18" rx="9" fill="#164E63"/>
+        <text class="c6eA-b" x="740" y="145" text-anchor="middle">MEASURE</text>
+        <text class="c6eA-l" x="740" y="170" text-anchor="middle">your time to merge</text>
+        <text class="c6eA-l" x="740" y="186" text-anchor="middle">your rework rate</text>
+        <text class="c6eA-n" x="20" y="224">The published numbers are about somebody else's codebase. Yours is the only one you can measure.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the arc ends at your own repository, not at a headline</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>What happened to the 19 percent, and what to do instead<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>METR's 2025 trial measured 16 experienced developers across 246 tasks as 19 percent slower with AI, while those same developers believed they had been 20 percent faster. Then its own authors published a larger follow-up: 57 developers, 143 repositories, over 800 tasks. The returning developers came out at minus 18 percent with an interval of minus 38 to plus 9, the new recruits at minus 4 percent with an interval of minus 15 to plus 9. <strong>Both intervals cross zero</strong>, so neither result is distinguishable from no effect. They name severe selection bias as the cause and are redesigning the study.</p>
+        <div class="prompt-box good">
+          <span class="label">★ METR, February 2026</span>
+"Based on conversations with study participants, we believe it is likely
+that developers are more sped up from AI tools now - in early 2026 -
+compared to our estimates from early 2025."
+        </div>
+        <p>So the lesson to leave with is not a number. Every number in this course will move, and the good ones will move because their authors kept measuring. The lesson is a habit: <strong>measure your own throughput and your own rework</strong>, because published results describe somebody else's repository, tooling and task mix. If your own numbers disagree with a headline, your numbers win. That is not anti-science, it is exactly what the researchers keep telling you when they revise in public.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ BUILD-ALONG ============ -->
+  <section class="section" id="demo-6">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Ship it, then run the control system over it</h2>
+      <span class="tag demo">★ 22 min · everyone ships</span>
+    </div>
+    <p class="lede">Your feature has been in progress for five sessions. Tonight it merges, but only after it clears a gate. Walk the sequence first, then grade the thing you are about to put on main.</p>
+
+    <div class="tick" data-stages="Diff|Imports|Tests|Secrets|Human" data-title="The pre-merge sequence, in order" data-foot="Five steps, roughly ninety seconds each. Run them in this order every time, because the cheap checks fail fastest.">
+      <p class="tick-note" data-stage="0"><b>Diff.</b> Read it hunk by hunk, not the summary of it. If the diff is too big to read, that is the finding: split it before you go any further.</p>
+      <p class="tick-note" data-stage="1"><b>Imports.</b> Every new import gets resolved to a package that genuinely exists and that you meant to add. Hallucinated package names are a measured failure mode, not a rumour.</p>
+      <p class="tick-note" data-stage="2"><b>Tests.</b> Open the test file and ask one question of each test: would this go red if the behaviour were wrong? A test that only executes the code is coverage theatre.</p>
+      <p class="tick-note" data-stage="3"><b>Secrets.</b> Grep the whole branch for keys, tokens, connection strings and anything that looks like a credential. Generated config and fixture files are where these turn up.</p>
+      <p class="tick-note" data-stage="4"><b>Human.</b> A person reviews it and a person merges it. GitHub requires exactly this for its own cloud agent's pull requests, and it is the right default for yours.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p><strong>Finish the feature.</strong> Whatever is left, close it out now. Do not start anything new tonight, because the point of this session is the gate, not the code.</p></div>
+      <div class="step"><p><strong>Split the branch if it needs splitting.</strong> Run <span class="mono">git diff --stat main...</span>. If the total is over roughly two hundred lines, find the natural seam and cut it into two pull requests. Reviewers read small diffs and skim large ones, and you already know which one you are.</p></div>
+      <div class="step"><p><strong>Read the whole diff out loud.</strong> Genuinely out loud, or subvocalised. It is the cheapest known way to stop your eyes sliding over a plausible-looking line that does the wrong thing.</p></div>
+      <div class="step"><p><strong>Check every new import.</strong> One at a time, against the registry. Not "it looks like a real package". Open it.</p></div>
+      <div class="step"><p><strong>Interrogate one test.</strong> Take the test covering the riskiest behaviour, break the implementation deliberately, and confirm it turns red. If it stays green you have just learned the most valuable thing in this session.</p></div>
+      <div class="step"><p><strong>Grade it, then merge it.</strong> Fill in the scorecard below honestly. Any row at zero is a reason to wait, not a reason to feel bad.</p></div>
+    </div>
+
+    <div class="tryrow" data-fn="wordcount" data-multiline="1" data-title="The pull request description you are about to open with" data-hint="Paste your PR description here" data-seed="Adds the feature. Refactors some stuff. Fixes tests." data-cta="Measure it" data-foot="Not a rule about length. If a reviewer cannot tell what changed and why from this, the diff is doing all the work alone."></div>
+
+    <div class="scorecard" data-title="Ship-or-not gate: the final five" data-foot="These are the five that would embarrass you if they were wrong. Any row at zero is a reason to wait until tomorrow.">
+      <div class="sc-row"><div class="sc-q">Every new import has been verified to be a package that really exists
+        <em>Opened in the registry, not recognised by eye. This is a measured failure mode with a name.</em></div></div>
+      <div class="sc-row"><div class="sc-q">You read the diff line by line rather than skimming it
+        <em>Every hunk, including the parts that looked boring. The boring parts are where it hides.</em></div></div>
+      <div class="sc-row"><div class="sc-q">The tests assert the behaviour rather than merely executing the code
+        <em>You broke something on purpose and watched a test go red. Green only proves the tests ran.</em></div></div>
+      <div class="sc-row"><div class="sc-q">No secret, key or credential appears anywhere in what was generated
+        <em>You grepped the branch, including config, fixtures and anything written into a sample file.</em></div></div>
+      <div class="sc-row"><div class="sc-q">A human reviewed it and a human merged it
+        <em>Not the same person who generated it, if you can help it. GitHub requires this for its own agent.</em></div></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>The last one: run your own measurement for a month</h2>
+      <span class="tag exercise">10 min a week</span>
+    </div>
+    <p>There is no session 7, so this homework has no deadline except the one you set. It is also the only part of the course that produces evidence about you rather than about somebody else.</p>
+    <ol>
+      <li><strong>Track time to merge.</strong> For every change for four weeks: the moment you started, and the moment it landed on main including review and rework. A note in a text file is enough.</li>
+      <li><strong>Track rework rate.</strong> The share of those merged changes you had to go back and fix within a week. This is the number that catches speed which was not real.</li>
+      <li><strong>Compare against your session 1 baseline.</strong> You measured one honest task in week one. Four weeks against that is not a study, but it is yours, and it is more relevant to your decisions than any published figure in this course.</li>
+      <li><strong>Run the pre-merge sequence every single time.</strong> Diff, imports, tests, secrets, human. If you drop one, drop it deliberately and write down which.</li>
+      <li><strong>Then read the two numbers together.</strong> Faster with flat rework is a real win. Faster with rising rework is the DORA finding happening to you personally, and you now know exactly which part of the stack to go and fix.</li>
+    </ol>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and the last slot in your passport gets stamped.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · DORA 2025 found AI adoption positive for throughput and still negative for delivery stability. What is their stated mechanism?</p>
+      <button class="qopt" type="button">A · Models write code that is fundamentally lower quality than human code</button>
+      <button class="qopt" type="button">B · Acceleration exposes weaknesses downstream, so without robust control systems a rise in change volume leads to instability</button>
+      <button class="qopt" type="button">C · Teams using AI skip code review entirely</button>
+      <p class="qwhy">Verbatim: "AI accelerates software development, but that acceleration can expose weaknesses downstream. Without robust control systems, like strong automated testing, mature version control practices, and fast feedback loops, an increase in change volume leads to instability." Hence the framing line: AI does not fix a team, it amplifies what is already there.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · Your suite is fully green on a generated change. What has that proved?</p>
+      <button class="qopt" type="button">A · The code is correct, which is what a test suite is for</button>
+      <button class="qopt" type="button">B · The code is correct for every case the reviewer would have thought of</button>
+      <button class="qopt" type="button">C · Only that the tests ran, which is not the same as the code being right</button>
+      <p class="qwhy">Session 1's playground scored five of five while shipping four real defects. Tests written after faulty code detect around 14 percent of faults against around 25 percent for tests written independently, because implementation and test end up mutually consistent and mask the defect instead of revealing it.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Copilot's code referencing reports <span class="mono">NOASSERTION</span> for a match. What does that mean?</p>
+      <button class="qopt" type="button">A · No licence was found for the matching code, so treat it as unknown rather than as free to use</button>
+      <button class="qopt" type="button">B · The code is confirmed to be public domain</button>
+      <button class="qopt" type="button">C · The blocking filter caught it and the suggestion was withheld</button>
+      <p class="qwhy">Code referencing shows the licence type of matching code, or NOASSERTION when none is found. Unknown is not the same as permissive. And GitHub's own note is that the cloud agent may generate code matching publicly available sources despite blocking policies, so the filter is not a guarantee.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ OFFICIAL COVERAGE ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">DORA 2025 · State of AI-assisted Software Development</span><span class="note">Roughly 5,000 professionals. 90 percent usage, over 80 percent believing in the productivity gain, 30 percent with little or no trust. Positive on throughput and product performance, still negative on delivery stability, plus the control-systems mechanism verbatim</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic · Claude Code security and permission modes</span><span class="note">"You're responsible for reviewing proposed code and commands for safety before approval", taught as the reason no autonomy setting moves responsibility</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">GitHub · responsible use of agents, and the cloud agent docs</span><span class="note">Always review and test generated code; draft pull requests from the cloud agent must be reviewed and merged by a human; plus the blocking-policy limitation note</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">OpenAI · Codex agent approvals and security</span><span class="note">danger-full-access labelled "not recommended", taught alongside the other two as the vendors' shared position</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">METR 2025 RCT and the February 2026 design update</span><span class="note">Closed out rather than re-taught: both follow-up intervals cross zero, the authors believe developers are likely faster in 2026, and the takeaway is a habit rather than a figure</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Doe v. GitHub</span><span class="note">Named only as on appeal with no ruling as of August 2026. No posture, no prediction, and no duplication-filter threshold, because those numbers are not in the documentation</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">learn-ai-qa-with-phoebe</span><span class="note">Pointed at, not taught. Assertion quality and mutation testing are a course of their own and this session says so out loud</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Full source map with every URL: <span class="mono">materials/official-course-map.md</span> in this repo. Certificates, videos and assessments stay with the official providers.</p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 6 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>AI amplifies, it does not fix</b><span>DORA 2025. Good practice gets multiplied and so does its absence. The tool is never the first thing to fix.</span></div>
+      <div class="cheat-item"><b>Throughput up, stability still down</b><span>Direction only, published by DORA. Change volume without control systems is instability arriving sooner.</span></div>
+      <div class="cheat-item"><b>The pre-merge five</b><span>Diff, imports, tests, secrets, human. Roughly ninety seconds each, and they fail cheapest first.</span></div>
+      <div class="cheat-item"><b>Green proves the tests ran</b><span>Break the implementation on purpose. If nothing turns red you do not have a test, you have coverage.</span></div>
+      <div class="cheat-item"><b>Never handed over</b><span>Security, money and personal data, migrations and destructive operations, and the decision about what to build.</span></div>
+      <div class="cheat-item"><b>Measure your own repo</b><span>Time to merge and rework rate. Published numbers are about somebody else's codebase, always.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">What you now own</span>
+    <p>A real feature, written and reviewed and merged by you. A way to read the evidence, including the reflex to ask who funded it and what setting it was measured in. A security posture with an honest list of what you never hand over. And a baseline of your own, which is the one number in this course that is actually about you. That is the whole course. Go and measure your month, then come back to <a href="../index.html">session 1</a> when you want to re-run the baseline. The rest of the shelf is at <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe</a>, and the next one to take is <a href="https://phoebefu6.github.io/learn-ai-qa-with-phoebe/">learn-ai-qa-with-phoebe</a>, because assertion quality is where this session stopped and that course starts.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 6 of 6 · learn-ai-coding-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="01-the-honest-baseline.html">Start again and re-run your baseline →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

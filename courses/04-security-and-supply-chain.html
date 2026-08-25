@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 4 of 6. Roughly 40 percent of AI-generated programs were found vulnerable. Worse, the humans using AI wrote less secure code and believed the opposite. Plus hallucinated packages, prompt injection with real CVEs, and what the vendors themselves warn you about.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Security and supply chain - learn ai coding with phoebe">
+<meta property="og:description" content="Session 4 of 6. Less secure code, more confidence, hallucinated packages, and four CVEs where the attacker never touched the developer's editor.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/courses/04-security-and-supply-chain.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Security and supply chain - learn ai coding with phoebe">
+<meta name="twitter:description" content="Session 4 of 6. The study where AI-assisted developers wrote less secure code and were more confident it was secure.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 4 · Security and supply chain - learn ai coding with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ai-coding-with-phoebe</a> / Session 4 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn AI Coding with Phoebe · Session 4 of 6</div>
+    <h1>Security and <span class="accent">supply chain</span></h1>
+    <p class="sub">This is the session that matters most, and it is the one every vendor course leaves out. Four separate bodies of evidence say the same uncomfortable thing: the generated code carries vulnerabilities at a measurable rate, the humans reviewing it get more confident rather than more careful, the imports it suggests sometimes name packages that do not exist, and the agent reading your pull requests will follow instructions a stranger left there. Tonight you do a real security pass on your own feature.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Medium</span>
+      <span class="chip audience">Anyone who codes as part of the job</span>
+      <span class="chip audience">Bring the feature you have been building</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-2 · Welcome</span>
+      <span class="a2" style="flex:4">2-21 · What the research shows</span>
+      <span class="a3" style="flex:5">21-43 · Build-along: the security pass</span>
+      <span class="a4" style="flex:1">43-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ PART 1 ============ -->
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the generated code itself</span>
+      <h2>Roughly four in ten, and that was before anyone reviewed it</h2>
+      <span class="tag concept">4 min live</span>
+    </div>
+    <p class="lede">Start with the narrowest question, because it has the cleanest answer. Forget the human for a moment. If you take the code that comes back and put it through a static analyser, how much of it is unsafe?</p>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A repeatable supply-chain check you can run in under a minute, a named permission posture for your own tooling, and the single habit that the Stanford study found actually reduced vulnerabilities in the code people shipped.</p>
+    </div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A meter showing that roughly 40 percent of 1,689 AI-generated programs were found vulnerable against MITRE's Top 25 CWEs">
+        <style>
+          .c4aT { font: 600 13px Inter, sans-serif; fill: #0C1A22; }
+          .c4aK { font: 700 11px Inter, sans-serif; fill: #5B7480; letter-spacing: .04em; }
+          .c4aB { font: 800 22px Inter, sans-serif; fill: #991B1B; }
+          .c4aN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <text class="c4aT" x="60" y="44">Pearce et al., IEEE S&amp;P 2022 · 89 scenarios · 1,689 generated programs</text>
+        <text class="c4aK" x="60" y="66">VULNERABLE</text>
+        <text class="c4aK" x="366" y="66">CLEAN</text>
+        <rect x="60" y="76" width="74" height="46" rx="5" fill="#991B1B"/>
+        <rect x="136" y="76" width="74" height="46" rx="5" fill="#991B1B"/>
+        <rect x="212" y="76" width="74" height="46" rx="5" fill="#991B1B"/>
+        <rect x="288" y="76" width="74" height="46" rx="5" fill="#991B1B"/>
+        <rect x="364" y="76" width="74" height="46" rx="5" fill="#DDEAEF"/>
+        <rect x="440" y="76" width="74" height="46" rx="5" fill="#DDEAEF"/>
+        <rect x="516" y="76" width="74" height="46" rx="5" fill="#DDEAEF"/>
+        <rect x="592" y="76" width="74" height="46" rx="5" fill="#DDEAEF"/>
+        <rect x="668" y="76" width="74" height="46" rx="5" fill="#DDEAEF"/>
+        <rect x="744" y="76" width="74" height="46" rx="5" fill="#DDEAEF"/>
+        <text class="c4aB" x="60" y="162">Roughly 4 in 10 were found vulnerable</text>
+        <text class="c4aN" x="60" y="196">Measured against MITRE's Top 25 CWEs. Independent work, NYU and Calgary.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - this is the floor, before a tired human accepts any of it</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>What "Asleep at the Keyboard" actually measured<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Pearce and colleagues built <strong>89 scenarios</strong> designed around MITRE's Top 25 Common Weakness Enumerations, generated code for each of them, and analysed the resulting <strong>1,689 programs</strong>. Roughly <strong>40 percent were found vulnerable</strong>. It was independent academic work out of NYU and Calgary, published at IEEE S&amp;P in 2022.</p>
+        <p>Two things to hold in your head about this number, and they pull in opposite directions.</p>
+        <ul>
+          <li><strong>It is a lower bound on your attention, not an upper bound on your risk.</strong> A static analyser only finds the classes it knows about. Nobody in that study was tired, on a deadline, or trusting a teammate.</li>
+          <li><strong>It is also not a verdict on the tool.</strong> Human-written code carries vulnerabilities too. The finding that matters is not "AI code is bad", it is "AI code is not pre-verified, and it arrives faster than your review capacity grows".</li>
+        </ul>
+        <p>Everything in the rest of this session is about that second clause. The volume goes up. The review does not automatically go up with it.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers what happens to the human</span>
+      <h2>Less secure code, and more confidence that it was secure</h2>
+      <span class="tag concept">6 min live</span>
+    </div>
+    <p class="lede">Here is the finding that should unsettle you, and the reason this session exists at all. Perry, Srivastava, Kumar and Boneh at Stanford did not measure the model. They measured people. Forty-seven participants, five security tasks, three languages, published at ACM CCS 2023.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart of the Stanford study: on the signing task 21 percent of the control group and 3 percent of AI-assisted participants wrote a secure solution; on the sandboxed-directory task 29 percent versus 12 percent">
+        <style>
+          .c4bH { font: 700 13px Inter, sans-serif; fill: #0C1A22; }
+          .c4bL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c4bV { font: 800 13px Inter, sans-serif; fill: #0C1A22; }
+          .c4bN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <text class="c4bH" x="60" y="40">Participants who wrote a secure solution</text>
+        <text class="c4bH" x="60" y="74">Signing task</text>
+        <text class="c4bL" x="232" y="100" text-anchor="end">Control group</text>
+        <rect x="240" y="82" width="252" height="26" rx="5" fill="#06B6D4"/>
+        <text class="c4bV" x="500" y="101">21%</text>
+        <text class="c4bL" x="232" y="134" text-anchor="end">With AI access</text>
+        <rect x="240" y="116" width="36" height="26" rx="5" fill="#991B1B"/>
+        <text class="c4bV" x="284" y="135" fill="#991B1B">3%</text>
+        <text class="c4bH" x="60" y="176">Sandboxed-directory task</text>
+        <text class="c4bL" x="232" y="202" text-anchor="end">Control group</text>
+        <rect x="240" y="184" width="348" height="26" rx="5" fill="#06B6D4"/>
+        <text class="c4bV" x="596" y="203">29%</text>
+        <text class="c4bL" x="232" y="236" text-anchor="end">With AI access</text>
+        <rect x="240" y="218" width="144" height="26" rx="5" fill="#991B1B"/>
+        <text class="c4bV" x="392" y="237" fill="#991B1B">12%</text>
+        <text class="c4bN" x="60" y="276">47 participants, five security tasks. The same people rated their own code as more secure.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the help made the outcome worse and the feeling better</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The two numbers, and the sentence underneath them<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>On the signing task, <strong>3 percent</strong> of participants with AI access produced a secure solution, against <strong>21 percent</strong> in the control group. On the sandboxed-directory task it was <strong>12 percent against 29 percent</strong>. Both times the assisted group did worse, and not by a rounding error.</p>
+        <p>Then the part that turns a study into a warning. Verbatim from the paper, participants with AI access:</p>
+        <div class="prompt-box bad">
+          <span class="label">✗ The over-trust finding, ACM CCS 2023</span>
+"were more likely to believe that they wrote secure code than
+those without access."
+
+Worse output. Higher confidence. Measured in the same room,
+on the same tasks, at the same time.
+        </div>
+        <p>That combination is what makes this different from every other quality problem you have dealt with. Normally the feeling of shakiness is the signal that tells you to look harder. Here the signal is inverted: the tool that degraded the work also removed the discomfort that would have made you check it.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The hopeful finding, which is the actionable one<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Do not end this part on the scary number, because the paper does not. The same study found a group who came out ahead, and described exactly what they did differently. Verbatim, participants:</p>
+        <div class="prompt-box good">
+          <span class="label">★ Perry, Srivastava, Kumar and Boneh, ACM CCS 2023</span>
+"who trusted the AI less and engaged more with the language
+and format of their prompts... provided code with fewer
+security vulnerabilities."
+        </div>
+        <p>Read that twice, because it is a job description. Two behaviours, both free, both entirely under your control:</p>
+        <ul>
+          <li><strong>Trust it less.</strong> Not "distrust it theoretically". Behave differently: read the diff, run the thing, look for the edge case it did not mention.</li>
+          <li><strong>Engage with the prompt.</strong> Rewrite the ask rather than accepting the first answer. Name the threat model. Say which library, which version, which failure mode.</li>
+        </ul>
+        <div class="callout tip">
+          <p><strong>This connects straight back to session 1.</strong> The spec-before-prompt lever took the playground from zero of five to five of five. It is the same behaviour showing up in a security study three years earlier. Engaging with the prompt is not a productivity trick, it is the mechanism.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3 ============ -->
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the supply chain</span>
+      <h2>Packages that do not exist, until somebody registers them</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Now the risk that has nothing to do with the logic of your code. Sometimes the model writes an import line for a package that was never published. That is a typo you can fix in four seconds. It becomes a supply-chain problem only when the invented name is consistent, and someone else notices it first.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three stacked layers showing how a hallucinated package name becomes an install: models invent names, the names are still registerable, and someone eventually installs one">
+        <style>
+          .c4cT { font: 700 13px Inter, sans-serif; fill: #0C1A22; }
+          .c4cS { font: 400 12px Inter, sans-serif; fill: #164E63; }
+          .c4cK { font: 700 10px Inter, sans-serif; fill: #5B7480; letter-spacing: .05em; }
+          .c4cN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <text class="c4cK" x="60" y="40">HOW THREE ORDINARY FACTS STACK INTO ONE RISK</text>
+        <rect x="60" y="210" width="760" height="52" rx="8" fill="#ECFEFF" stroke="#C2D5DC"/>
+        <text class="c4cT" x="76" y="234">1 · Models invent package names, at a steady rate</text>
+        <text class="c4cS" x="76" y="252">At least 5.2% for commercial models and 21.7% for open-source ones. 205,474 unique names.</text>
+        <rect x="110" y="146" width="660" height="52" rx="8" fill="#FEF9E7" stroke="#CA8A04"/>
+        <text class="c4cT" x="126" y="170">2 · The invented names are free to claim</text>
+        <text class="c4cS" x="126" y="188" fill="#3A2A00">Of 127 names hallucinated by all five frontier models, 53 were still available to register.</text>
+        <rect x="160" y="82" width="560" height="52" rx="8" fill="#FEF2F2" stroke="#991B1B"/>
+        <text class="c4cT" x="176" y="106">3 · Somebody eventually runs the install line</text>
+        <text class="c4cS" x="176" y="124" fill="#991B1B">One registered proof-of-concept name: 30,000+ downloads in three months.</text>
+        <text class="c4cN" x="60" y="286">No layer is an attack on its own. The check that breaks the stack takes about ten seconds.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three boring facts, and the one place you can break the chain</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The rates, in 2025 and again in 2026<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Spracklen and colleagues, USENIX Security 2025, generated <strong>576,000 code samples across 16 models</strong>. Package hallucination rates were, verbatim, "at least <strong>5.2% for commercial models and 21.7% for open-source models</strong>", producing <strong>205,474 unique hallucinated package names</strong>.</p>
+        <p>The obvious objection is that this was measured on older models. So it was checked again. Socket.dev ran 199,845 responses across five frontier models in April 2026 and found rates of <strong>4.62 to 6.10 percent</strong>. Lower, still not zero, and still enough to matter. <strong>127 hallucinated names were shared across all five models</strong>, which is the dangerous property, and <strong>53 of those were still available to register</strong> at review time.</p>
+        <p>Shared and repeatable is what turns a typo into a target. A name that only one model invents once is noise. A name that five models invent independently is a queue of future installs.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The documented case, stated carefully<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A researcher noticed models repeatedly hallucinating a PyPI package named <span class="mono">huggingface-cli</span>. They registered the empty name as a proof of concept. It received <strong>over 30,000 genuine downloads in three months</strong>, and Alibaba had copy-pasted the hallucinated install command into a public repository's README.</p>
+        <div class="callout tip">
+          <p><strong>Say this part out loud when you retell it.</strong> That was a benign researcher proof of concept, not an attack. The package did nothing. <strong>No large-scale breach has been publicly attributed to slopsquatting.</strong> The honest claim is that the path is demonstrably open and cheap to walk, which is reason enough to spend ten seconds on the check. Overselling it as a breach is how you lose the room, and the room is right to push back.</p>
+        </div>
+        <p>The habit this buys you is small and mechanical: <strong>verify every new import against the registry before you install it.</strong> Not the code, the name. Does the package exist, who publishes it, when was it first released, and does the download history look like a real library or like something that appeared last Tuesday.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 4 ============ -->
+  <section class="section" id="part-4">
+    <div class="section-kicker">
+      <span class="klabel">Part 4 · covers prompt injection</span>
+      <h2>The attacker never touched the editor</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">This one is not theoretical and it is not a research demo. It has CVE numbers, severity scores and vendor fixes. And once you see the shape of it, all four incidents are the same incident.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Timeline of four documented coding-agent prompt injection vulnerabilities: CamoLeak, CurXecute, MCPoison and DuneSlide">
+        <style>
+          .c4dD { font: 700 11px Inter, sans-serif; fill: #5B7480; }
+          .c4dL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c4dB { font: 700 10px Inter, sans-serif; fill: #fff; letter-spacing: .04em; }
+          .c4dN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <line x1="130" y1="120" x2="730" y2="120" stroke="#DDEAEF" stroke-width="2"/>
+        <circle cx="130" cy="120" r="7" fill="#991B1B"/>
+        <text class="c4dD" x="130" y="102" text-anchor="middle">2025</text>
+        <rect x="86" y="132" width="88" height="17" rx="8" fill="#991B1B"/>
+        <text class="c4dB" x="130" y="144" text-anchor="middle">CAMOLEAK</text>
+        <text class="c4dL" x="130" y="168" text-anchor="middle">Copilot Chat, CVSS 9.6</text>
+        <text class="c4dL" x="130" y="184" text-anchor="middle">hidden in a PR body</text>
+        <circle cx="330" cy="120" r="7" fill="#CA8A04"/>
+        <text class="c4dD" x="330" y="102" text-anchor="middle">2025</text>
+        <rect x="286" y="132" width="88" height="17" rx="8" fill="#CA8A04"/>
+        <text class="c4dB" x="330" y="144" text-anchor="middle">CURXECUTE</text>
+        <text class="c4dL" x="330" y="168" text-anchor="middle">Cursor, CVSS 8.6</text>
+        <text class="c4dL" x="330" y="184" text-anchor="middle">config rewritten first</text>
+        <circle cx="530" cy="120" r="7" fill="#CA8A04"/>
+        <text class="c4dD" x="530" y="102" text-anchor="middle">2025</text>
+        <rect x="486" y="132" width="88" height="17" rx="8" fill="#CA8A04"/>
+        <text class="c4dB" x="530" y="144" text-anchor="middle">MCPOISON</text>
+        <text class="c4dL" x="530" y="168" text-anchor="middle">Cursor, approved once</text>
+        <text class="c4dL" x="530" y="184" text-anchor="middle">swapped later, silently</text>
+        <circle cx="730" cy="120" r="7" fill="#991B1B"/>
+        <text class="c4dD" x="730" y="102" text-anchor="middle">2026</text>
+        <rect x="686" y="132" width="88" height="17" rx="8" fill="#991B1B"/>
+        <text class="c4dB" x="730" y="144" text-anchor="middle">DUNESLIDE</text>
+        <text class="c4dL" x="730" y="168" text-anchor="middle">Cursor, CVSS 9.8</text>
+        <text class="c4dL" x="730" y="184" text-anchor="middle">zero-click to host RCE</text>
+        <text class="c4dN" x="60" y="222">Four incidents, one shape: the instructions arrived in something the agent read for you.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - none of these required access to your machine</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Four documented incidents, and the one pattern<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Incident</th><th>CVE and severity</th><th>What happened</th></tr>
+          <tr><td><strong>CamoLeak</strong>, Copilot Chat</td><td>CVE-2025-59145, CVSS 9.6</td><td>instructions hidden in <strong>pull request descriptions</strong>, executed on the reviewer's behalf, private source exfiltrated through GitHub's own image proxy. Mitigated by disabling image rendering in Copilot Chat</td></tr>
+          <tr><td><strong>CurXecute</strong>, Cursor</td><td>CVE-2025-54135, CVSS 8.6</td><td>injection via a Slack-connected MCP server rewrote Cursor's global <span class="mono">mcp.json</span> before the user could reject the edit. Fixed in Cursor 1.3</td></tr>
+          <tr><td><strong>MCPoison</strong>, Cursor</td><td>CVE-2025-54136</td><td>an MCP config approved <strong>once</strong> could later have malicious commands swapped in with no second prompt</td></tr>
+          <tr><td><strong>DuneSlide</strong>, Cursor</td><td>CVE-2026-50548 / 50549, CVSS 9.8</td><td>zero-click sandbox escape to host RCE, via injected instructions arriving in an MCP response, a fetched web page, or a project file. Fixed in Cursor 3.0</td></tr>
+        </table>
+        <div class="callout example">
+          <span class="ex-pill">The pattern</span>
+          <p><strong>In every one of these, the attacker never typed into the developer's editor.</strong> They planted instructions in something the agent read on the developer's behalf: a pull request description, a Slack message pulled in through MCP, a config file, a fetched web page. Your threat surface is no longer what you type. It is everything your agent is allowed to read.</p>
+        </div>
+        <p>Which changes the review question. It stops being "is this code correct" and becomes "where did this instruction come from". A model summarising an issue written by a stranger is reading attacker-supplied text, and it has no reliable way to tell that text apart from yours.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>What actually reduces this, and what only looks like it does<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Narrow what the agent can read.</strong> Every MCP server, every fetch tool, every auto-included file is an input channel. MCPoison exists because an approval was treated as permanent.</li>
+          <li><strong>Re-approve on change, not on first use.</strong> If your tooling remembers a yes, ask yourself what it would do when the thing you said yes to is quietly edited.</li>
+          <li><strong>Keep network access off by default</strong> for anything running unattended. Exfiltration needs an outbound path, and CamoLeak found one in an image proxy nobody was watching.</li>
+          <li><strong>Update the client.</strong> Three of these four are fixed in a named version. An agent you installed last year is a decision you are still making.</li>
+        </ul>
+        <p>And the thing that only looks like a control: telling the model to ignore instructions found in files. That is a request, not a boundary. Anthropic's own docs say it plainly in the next part.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 5 ============ -->
+  <section class="section" id="part-5">
+    <div class="section-kicker">
+      <span class="klabel">Part 5 · covers the vendors' own words</span>
+      <h2>Read the warnings the vendors wrote about their own products</h2>
+      <span class="tag concept">3 min live</span>
+    </div>
+    <p class="lede">A vendor writing down a limitation of the thing they are selling you is worth more than any independent warning, because it costs them something. All three of the major vendors have done it, and their documentation is more cautious than their marketing.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Anthropic, GitHub and OpenAI on autonomy<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Anthropic</strong>, on the bypass mode, in the security and permission-mode docs:</p>
+        <div class="prompt-box good">
+          <span class="label">★ Anthropic, Claude Code docs</span>
+"Only use this mode in isolated environments like containers,
+VMs, or dev containers without internet access"
+
+"bypassPermissions offers no protection against prompt
+injection or unintended actions."
+        </div>
+        <p>That second sentence belongs on a slide. It is the vendor telling you that their most permissive mode is not a trade-off you can manage with care, it is a mode with a stated absence of protection.</p>
+        <p>On <strong>auto mode</strong>, which is now the built-in starting mode on Pro, Max and Team plans: "Auto mode reduces permission prompts but <strong>does not guarantee safety</strong>. Use it for tasks where you trust the general direction, not as a replacement for review on sensitive operations." And the general rule: "You're responsible for reviewing proposed code and commands for safety before approval."</p>
+        <p><strong>OpenAI</strong> labels <span class="mono">danger-full-access</span> as <strong>"not recommended"</strong>, defaults the agent to running with network access turned off, and warns that "Prompt injection can cause the agent to fetch and follow untrusted instructions."</p>
+        <p><strong>GitHub</strong> requires a human in the loop by policy, not by suggestion: "Draft pull requests created by Copilot cloud agent must be reviewed and merged by a human." They also state that Copilot "may not identify all of the problems that are present in code" and that code review from it "should be supplemented with careful human code review".</p>
+        <div class="callout example">
+          <span class="ex-pill">All three agree</span>
+          <p>You remain responsible for reviewing the output, and <strong>no autonomy mode removes that</strong>. Three competitors, three legal teams, one sentence.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ BUILD-ALONG ============ -->
+  <section class="section" id="demo-4">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>A security pass on the feature you are building</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">Open the feature you have been carrying since session 1. Three passes, roughly seven minutes each. Nothing here needs a tool you do not already have.</p>
+
+    <div class="tick" data-stages="New imports|Registry|Age|Install" data-title="The supply-chain check, in about a minute">
+      <p class="tick-note" data-stage="0"><b>List new imports.</b> Diff your dependency file against the last commit you trust. Every name that is new to the project goes on the list, including transitive ones your lockfile picked up.</p>
+      <p class="tick-note" data-stage="1"><b>Check the registry.</b> Open the package page. Does it exist, who publishes it, and is the repository link real and populated? A hallucinated name either does not resolve or resolves to something with no history.</p>
+      <p class="tick-note" data-stage="2"><b>Check the age.</b> First release date and download curve. A library your model "knows" should not have appeared three weeks ago with a flat download history and one maintainer.</p>
+      <p class="tick-note" data-stage="3"><b>Install, pinned.</b> Only now, and with the version pinned and the lockfile committed. If you would not have chosen this package yourself, that is a decision to make consciously, not by autocomplete.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p><strong>Pass 1 · the imports.</strong> Run the four steps above on every new dependency in your feature. Most of you will find nothing, which is the correct and boring outcome. Time it, so you know what the check actually costs you.</p></div>
+      <div class="step"><p><strong>Pass 2 · the CWE classes.</strong> Reread the diff hunting for the weakness classes the Pearce study probed: unvalidated input reaching a query or a shell, path handling that accepts <span class="mono">..</span>, a secret or a key written inline, a cryptographic choice made for you, an error path that swallows the failure. Not a full threat model. Five named things, in your own diff.</p></div>
+      <div class="step"><p><strong>Pass 3 · the permission posture.</strong> Write down, in one sentence, what your tooling is allowed to do without asking you. Then check it against what it is actually configured to do. Almost everyone finds a gap here, and it is usually a yes you gave once, months ago.</p></div>
+      <div class="step"><p><strong>Name your posture out loud.</strong> "Read anywhere, write only in this repo, never run a network command without asking, and the bypass mode only inside a container with no internet." That sentence is the deliverable. Put it in your project's readme where the next person will find it.</p></div>
+      <div class="step"><p><strong>Then re-ask one thing.</strong> Take the riskiest function in your feature and prompt it again, this time naming the threat model and the failure you are worried about. Compare the two answers. That is the Stanford finding, run on your own code.</p></div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Why pass 3 is not optional.</strong> Every one of the four CVEs is an authorisation story, not a cleverness story. The agent was allowed to read something, or a yes from last month was still valid. You cannot patch the model, but you can decide what it is allowed to touch, and that decision is entirely yours.</p>
+    </div>
+
+    <div class="stakes" data-base="12" data-unit="min per feature" data-lower-is-better="1" data-title="What the check costs, and what skipping it costs" data-foot="Directional, not a benchmark. The point is the shape: the check is minutes, the cleanup is not.">
+      <label><input type="checkbox" data-delta="-6"> You batch it: one pass over the whole diff instead of one per import</label>
+      <label><input type="checkbox" data-delta="-3"> The registry page is bookmarked, so a lookup is two clicks</label>
+      <label><input type="checkbox" data-delta="-2"> Versions are pinned and the lockfile is committed, so nothing changes under you</label>
+      <label><input type="checkbox" data-delta="180" data-trap="1"> You skip it, and one hallucinated name reaches a merged branch</label>
+    </div>
+
+    <div class="tryrow" data-fn="wordcount" data-multiline="1" data-title="Write your permission posture in one sentence" data-hint="What your tooling may do without asking" data-seed="Read anywhere, write only in this repo, ask before any network command." data-cta="Check it" data-foot="If it takes you more than two sentences, you do not have a posture, you have a history of individual approvals."></div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 5</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Finish the import audit.</strong> Not just your feature branch. Run the four-step check over every dependency added to the project in the last three months. You are looking for names nobody can explain.</li>
+      <li><strong>Write the posture into the repo.</strong> One sentence in the readme or the project config, so it survives you. A posture that lives only in your head is not a control.</li>
+      <li><strong>Check your agent's read surface.</strong> List every MCP server, integration and auto-included path your tooling can pull from. For each one, answer: could a stranger put text in there? That list is your injection surface.</li>
+      <li><strong>Update your client.</strong> Three of the four CVEs are fixed in a named version. Check yours.</li>
+      <li><strong>Run the Stanford experiment on yourself, once.</strong> Take something you accepted this week without reading closely. Read it properly now. Note whether you would have rated it secure beforehand. That gap is the finding, and it is more persuasive on your own code than in a paper.</li>
+    </ol>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 4 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · What did the Stanford study find about participants who had AI access?</p>
+      <button class="qopt" type="button">A · They wrote more secure code but took longer to do it</button>
+      <button class="qopt" type="button">B · They wrote less secure code and were more likely to believe it was secure</button>
+      <button class="qopt" type="button">C · They wrote less secure code and knew it, but shipped it anyway</button>
+      <p class="qwhy">3 percent versus 21 percent on the signing task, 12 percent versus 29 percent on the sandboxed-directory task, and verbatim, they "were more likely to believe that they wrote secure code than those without access." Worse output, higher confidence.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · A researcher registered the hallucinated PyPI name <span class="mono">huggingface-cli</span> and it got over 30,000 downloads. What is the accurate way to describe that?</p>
+      <button class="qopt" type="button">A · A large-scale supply-chain breach affecting thousands of companies</button>
+      <button class="qopt" type="button">B · An attack that was caught before any package was installed</button>
+      <button class="qopt" type="button">C · A benign proof of concept showing the path is open, with no public breach attributed to slopsquatting</button>
+      <p class="qwhy">The package did nothing. It demonstrated that a consistently hallucinated name is a cheap, unclaimed foothold, and that install lines get copy-pasted into public documentation. Overstating it as a breach is both false and the fastest way to lose your audience.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · What do CamoLeak, CurXecute, MCPoison and DuneSlide have in common?</p>
+      <button class="qopt" type="button">A · The attacker planted instructions in content the agent read on the developer's behalf, never in the editor</button>
+      <button class="qopt" type="button">B · All four required stolen credentials to exploit</button>
+      <button class="qopt" type="button">C · All four were theoretical research demos with no assigned CVEs</button>
+      <p class="qwhy">A pull request description, a Slack message arriving through MCP, a config file, a fetched web page. All four carry CVE numbers and vendor fixes. Your threat surface is everything your agent is allowed to read, not just what you type into it.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ OFFICIAL COVERAGE ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Pearce et al., IEEE S&amp;P 2022</span><span class="note">89 scenarios, 1,689 generated programs, roughly 40 percent found vulnerable against MITRE's Top 25 CWEs. Independent, NYU and Calgary</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Perry, Srivastava, Kumar and Boneh, ACM CCS 2023</span><span class="note">47 participants, five tasks. 3 versus 21 percent and 12 versus 29 percent, the over-trust finding, and the lower-trust habit that produced fewer vulnerabilities</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Spracklen et al., USENIX Security 2025 · Socket.dev 2026 · the Lasso proof of concept</span><span class="note">576,000 samples and 16 models, 4.62 to 6.10 percent still in April 2026, and the 30,000-download proof of concept described as exactly what it was</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">CamoLeak · CurXecute · MCPoison · DuneSlide</span><span class="note">Four CVEs with severities and fixed versions, taught as one pattern rather than four incidents</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic, GitHub and OpenAI security documentation</span><span class="note">The bypass-mode and auto-mode warnings, danger-full-access as not recommended, and the human-merge requirement for cloud agent PRs</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">GH-300 certification security objectives</span><span class="note">Overlaps this session's ground. Positioned here, assessed there</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Full source map with every URL: <span class="mono">materials/official-course-map.md</span> in this repo. Certificates, videos and assessments stay with the official providers.</p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 4 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Roughly 4 in 10</b><span>1,689 generated programs, about 40 percent vulnerable against MITRE's Top 25. That is the floor, before any human accepts it.</span></div>
+      <div class="cheat-item"><b>Worse code, more confidence</b><span>3 versus 21 percent secure on the signing task, and the assisted group believed the opposite. The usual warning signal is inverted.</span></div>
+      <div class="cheat-item"><b>The habit that worked</b><span>Trust it less, engage more with the prompt. That group shipped fewer vulnerabilities, in the same study.</span></div>
+      <div class="cheat-item"><b>Verify the name, not the code</b><span>Registry, publisher, first release date, download curve. Then install pinned. About ten seconds.</span></div>
+      <div class="cheat-item"><b>Your surface is what it reads</b><span>PR descriptions, MCP responses, fetched pages, project files. Four CVEs, none of them typed by the attacker.</span></div>
+      <div class="cheat-item"><b>The vendors said it first</b><span>Bypass mode "offers no protection against prompt injection", auto mode "does not guarantee safety", full access "not recommended".</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>You now have a posture, which is the thing most people building with these tools cannot state in a sentence. Session 5 is where the feature actually gets built: a real agent run with that posture switched on, plan-first, and a side-by-side that shows what the plan bought you before a single line was written.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 4 of 6 · learn-ai-coding-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="05-build-the-thing.html">Next: Build the thing →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>

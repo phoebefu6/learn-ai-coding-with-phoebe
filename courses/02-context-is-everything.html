@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 2 of 6. The model only knows what is in front of it. Why a long session quietly gets worse rather than better, what auto-compaction throws away, and the four mechanical fixes that put the right things back in the window.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Context is everything - learn ai coding with phoebe">
+<meta property="og:description" content="Session 2 of 6. What the model actually sees, why long sessions degrade, and the vendor's own instruction to clear between tasks.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/courses/02-context-is-everything.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Context is everything - learn ai coding with phoebe">
+<meta name="twitter:description" content="Session 2 of 6. Why a long session gets worse, not better, and the four fixes that reverse it.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 2 · Context is everything - learn ai coding with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-ai-coding-with-phoebe</a> / Session 2 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn AI Coding with Phoebe · Session 2 of 6</div>
+    <h1>Context is <span class="accent">everything</span></h1>
+    <p class="sub">The model is not clever and it is not lazy. It answers from what is in front of it, and nothing else. That single fact explains almost every bad output you have ever accepted, and it explains something less obvious too: a session that has been open all afternoon is not warmed up, it is degraded. Tonight you learn what the window actually holds, why it gets worse over hours, and the four mechanical moves that put the right things back in it.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Easy</span>
+      <span class="chip audience">Anyone who codes as part of the job</span>
+      <span class="chip audience">Bring the feature you picked in session 1</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Where we left off</span>
+      <span class="a2" style="flex:4">3-20 · What the window holds</span>
+      <span class="a3" style="flex:5">20-42 · Build-along: your context pack</span>
+      <span class="a4" style="flex:1">42-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we left off</h2>
+    </div>
+    <p class="lede">Last session you watched one lever take the playground from zero of five to five of five. That lever was the spec. Tonight is about the thing sitting next to the spec, which is everything else the model can see at the moment you ask.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A written spec and a written context pack for your real feature, a habit of clearing between unrelated tasks, and a first-hand comparison of the same task run in a fresh session versus a stale one.</p>
+    </div>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Two levers, and only one of them shows up in a test<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>In session 1 the spec lever moved a number you could see. Zero of five to five of five, immediately, because naming the edge cases is the difference between deciding them yourself and letting the model decide them for you.</p>
+        <p>The context lever did something different. The score did not move at all. What moved was the amber note underneath it, the one saying the code had ignored the surrounding conventions and invented a third way of doing something the repo already does twice.</p>
+        <p>That is the honest shape of tonight's material. No test in your suite will ever turn red because a new function is a stylistic orphan. It passes, it merges, and the codebase quietly gets a little harder to read. Context is the lever with no scoreboard, which is exactly why it gets skipped.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 1 ============ -->
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers what the model sees</span>
+      <h2>What is actually in the window</h2>
+      <span class="tag concept">6 min live</span>
+    </div>
+    <p class="lede">Think of it as a desk rather than a brain. Whatever you put on the desk gets used. Whatever you left in the drawer may as well not exist, no matter how obvious it is to you.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four layers of context: the ask, the spec, the files you point at, and the repository conventions, each with what it adds and whether a test can see it">
+        <style>
+          .c2aL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c2aD { font: 700 12px Inter, sans-serif; fill: #0C1A22; }
+          .c2aW { font: 700 12px Inter, sans-serif; fill: #fff; }
+          .c2aN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <text class="c2aL" x="200" y="68" text-anchor="end">The ask</text>
+        <rect x="215" y="44" width="200" height="30" rx="6" fill="#ECFEFF" stroke="#A5F3FC"/>
+        <text class="c2aD" x="228" y="64">The words you typed</text>
+        <text class="c2aN" x="430" y="64">Always there. Alone, it is a pile of open decisions.</text>
+
+        <text class="c2aL" x="200" y="120" text-anchor="end">The spec</text>
+        <rect x="215" y="96" width="200" height="30" rx="6" fill="#A5F3FC"/>
+        <text class="c2aD" x="228" y="116">Edge cases, named</text>
+        <text class="c2aN" x="430" y="116">Session 1: this lever alone moved 0 of 5 to 5 of 5.</text>
+
+        <text class="c2aL" x="200" y="172" text-anchor="end">The context</text>
+        <rect x="215" y="148" width="200" height="30" rx="6" fill="#06B6D4"/>
+        <text class="c2aW" x="228" y="168">Files you point at</text>
+        <text class="c2aN" x="430" y="168">Nothing testable moved. The invented third way stopped.</text>
+
+        <text class="c2aL" x="200" y="224" text-anchor="end">The conventions</text>
+        <rect x="215" y="200" width="200" height="30" rx="6" fill="#0891B2"/>
+        <text class="c2aW" x="228" y="220">How this repo does it</text>
+        <text class="c2aN" x="430" y="220">Only present if a project file puts it in front of the model.</text>
+
+        <text class="c2aN" x="60" y="272">The model is not withholding anything. It answers from the window, and the window is what you filled.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - only two of these four layers ever show up in a test result</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The spec, the surrounding code, the conventions<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>The spec</strong> is what the thing must do, including the parts that are boring. Empty input. The boundary value. What happens on the error path. If you do not write those down, the model picks them, and it picks the most common pattern in its training rather than the one your system needs.</p>
+        <p><strong>The surrounding code</strong> is the shape of the answer. Which helper already exists, how errors travel through this service, what a function in this file normally looks like. You know all of it and none of it is in the window unless you put it there.</p>
+        <p><strong>The conventions</strong> are the rules nobody wrote down: this repo returns result objects rather than throwing, tests live next to the source, dates are always UTC at the boundary. These are the ones that produce the stylistic orphan.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>An analyst asks for "a function to load the monthly file". What comes back reads pandas directly, hard-codes the path and raises on a missing file. All three are wrong for that team, and none of the three is a bug. Their loader module, their config object and their result-not-exception convention were all sitting in the drawer.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Why "it should have known" is the wrong instinct<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>When a colleague joins your team you do not expect them to guess the conventions. You point them at three files and a wiki page. The assistant deserves less patience than the colleague and needs more of the same input, because it will never walk over and ask.</p>
+        <p>The useful reframe: every time you are annoyed at an output, ask what you would have had to hand a competent stranger for that answer to be obvious. That list is your context pack. It is usually shorter than you expect, and it is almost always the same list every time, which is why it belongs in a file rather than in your fingers.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the vendor's own mechanics</span>
+      <h2>Why a long session quietly gets worse</h2>
+      <span class="tag concept">7 min live</span>
+    </div>
+    <p class="lede">Most people treat a long session as an asset. It feels like the model has been learning about your problem all afternoon. Anthropic's own documentation describes something closer to the opposite, and it is worth reading in their words rather than mine.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One session across a working day: fresh in the morning, summarised by auto-compaction at midday, and by evening resending a full stale history with every message">
+        <style>
+          .c2bD { font: 700 11px Inter, sans-serif; fill: #5B7480; }
+          .c2bL { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c2bB { font: 700 9.5px Inter, sans-serif; fill: #fff; letter-spacing: .04em; }
+          .c2bN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <line x1="140" y1="120" x2="740" y2="120" stroke="#DDEAEF" stroke-width="2"/>
+        <circle cx="140" cy="120" r="7" fill="#0891B2"/>
+        <text class="c2bD" x="140" y="102" text-anchor="middle">09:00</text>
+        <rect x="96" y="132" width="88" height="17" rx="8" fill="#0891B2"/>
+        <text class="c2bB" x="140" y="144" text-anchor="middle">FRESH</text>
+        <text class="c2bL" x="140" y="168" text-anchor="middle">Small window</text>
+        <text class="c2bL" x="140" y="184" text-anchor="middle">every answer on topic</text>
+        <circle cx="440" cy="120" r="7" fill="#CA8A04"/>
+        <text class="c2bD" x="440" y="102" text-anchor="middle">13:00</text>
+        <rect x="396" y="132" width="88" height="17" rx="8" fill="#CA8A04"/>
+        <text class="c2bB" x="440" y="144" text-anchor="middle">COMPACTED</text>
+        <text class="c2bL" x="440" y="168" text-anchor="middle">History summarised</text>
+        <text class="c2bL" x="440" y="184" text-anchor="middle">detail gone for good</text>
+        <circle cx="740" cy="120" r="7" fill="#991B1B"/>
+        <text class="c2bD" x="740" y="102" text-anchor="middle">17:00</text>
+        <rect x="696" y="132" width="88" height="17" rx="8" fill="#991B1B"/>
+        <text class="c2bB" x="740" y="144" text-anchor="middle">STALE</text>
+        <text class="c2bL" x="740" y="168" text-anchor="middle">Full history resent</text>
+        <text class="c2bL" x="740" y="184" text-anchor="middle">on every message</text>
+        <text class="c2bN" x="60" y="222">Anthropic traces runaway spend to long sessions that were never cleared.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the session did not warm up over the day, it silted up</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Three sentences from the docs that change how you work<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>These are Anthropic's own words about their own product, which is why they carry weight. A vendor writing down a limitation is worth more than any warning from outside.</p>
+        <div class="prompt-box good">
+          <span class="label">★ Anthropic, Claude Code cost documentation</span>
+Claude Code "sends your full conversation with every request... so a one-line
+question in a session that has been open all day still draws usage for the
+whole conversation."
+
+Auto-compaction "summarizes conversation history when approaching context
+limits."
+
+"Use `/clear` to start fresh when switching to unrelated work. Stale context
+wastes tokens on every subsequent message."
+        </div>
+        <p>Read them together and the mechanism is plain. Nothing is discarded as you work, so the bill grows with the length of the day rather than the size of the question. Then, when the window fills, the history is summarised, and a summary is lossy by design. The precise thing you agreed at 10am becomes a sentence about having agreed something.</p>
+        <p>Their own diagnosis of the teams who get a shocking invoice, verbatim, is that it "usually traces back to long sessions that were never cleared."</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>What that costs, with the vendor's own benchmark<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The same documentation publishes a figure teams can plan against: <strong>"around $13 per developer per active day and $150-250 per developer per month"</strong>. That is the benchmark to compare your own usage to, and it is the only cost number in this course that comes from the vendor rather than from a forum.</p>
+        <table class="clean">
+          <tr><th>The habit</th><th>What it does to the window</th><th>What it does to the bill</th></tr>
+          <tr><td>One session open all day</td><td>Full history resent with every request, then compacted lossily</td><td>Every message priced against the whole conversation</td></tr>
+          <tr><td><span class="mono">/clear</span> between unrelated tasks</td><td>Window holds only what this task needs</td><td>The vendor's own recommended fix for runaway spend</td></tr>
+          <tr><td>Project instructions file</td><td>Conventions present from the first message, every session</td><td>Small and constant, instead of re-explained every time</td></tr>
+        </table>
+        <div class="callout tip">
+          <p><strong>The part people miss.</strong> Cost and quality are the same problem here, not two problems. The stale history you are paying to resend is also the stale history the model is reading. You are being charged to be misled by this morning's abandoned approach.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3 ============ -->
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the fixes</span>
+      <h2>Four mechanical fixes</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">None of these are clever. They are the equivalent of closing the tabs you are not using, and they work for the same unglamorous reason.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A decision for every new task: if it touches the same files keep the session, otherwise clear first and rebuild the spec and context">
+        <style>
+          .c2cT { font: 700 13px Inter, sans-serif; fill: #fff; }
+          .c2cK { font: 600 12px Inter, sans-serif; fill: #0C1A22; }
+          .c2cE { font: 700 11px Inter, sans-serif; fill: #5B7480; }
+          .c2cN { font: 400 12px Inter, sans-serif; fill: #5B7480; }
+        </style>
+        <rect x="340" y="40" width="200" height="40" rx="8" fill="#0891B2"/>
+        <text class="c2cT" x="440" y="65" text-anchor="middle">A new task arrives</text>
+        <line x1="440" y1="80" x2="440" y2="110" stroke="#C2D5DC" stroke-width="2"/>
+        <rect x="320" y="110" width="240" height="40" rx="8" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+        <text class="c2cK" x="440" y="135" text-anchor="middle">Same files as the last one?</text>
+        <line x1="320" y1="130" x2="220" y2="130" stroke="#C2D5DC" stroke-width="2"/>
+        <line x1="220" y1="130" x2="220" y2="180" stroke="#C2D5DC" stroke-width="2"/>
+        <line x1="560" y1="130" x2="660" y2="130" stroke="#C2D5DC" stroke-width="2"/>
+        <line x1="660" y1="130" x2="660" y2="180" stroke="#C2D5DC" stroke-width="2"/>
+        <text class="c2cE" x="228" y="124">yes</text>
+        <text class="c2cE" x="600" y="124">no</text>
+        <rect x="100" y="180" width="240" height="40" rx="8" fill="#A5F3FC"/>
+        <text class="c2cK" x="220" y="205" text-anchor="middle">Keep the session</text>
+        <rect x="540" y="180" width="240" height="40" rx="8" fill="#CA8A04"/>
+        <text class="c2cT" x="660" y="205" text-anchor="middle">Clear it first</text>
+        <line x1="220" y1="220" x2="220" y2="250" stroke="#C2D5DC" stroke-width="2"/>
+        <line x1="660" y1="220" x2="660" y2="250" stroke="#C2D5DC" stroke-width="2"/>
+        <rect x="100" y="250" width="240" height="40" rx="8" fill="#fff" stroke="#DDEAEF" stroke-width="1.5"/>
+        <text class="c2cK" x="220" y="275" text-anchor="middle">Context still earns its cost</text>
+        <rect x="540" y="250" width="240" height="40" rx="8" fill="#fff" stroke="#DDEAEF" stroke-width="1.5"/>
+        <text class="c2cK" x="660" y="275" text-anchor="middle">Fresh window, then re-spec</text>
+        <text class="c2cN" x="60" y="320">Stale context wastes tokens on every subsequent message, in the vendor's own words.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - one question, asked before every task, is the whole discipline</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The four moves, in the order they pay off<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>1. A project instructions file.</strong> One file at the root of the repo that states the conventions, the commands to run tests, the structure, and the things a newcomer always gets wrong. It loads with every session, so you stop paying to re-explain your codebase every morning.</p>
+        <p><strong>2. Clear between unrelated tasks.</strong> Finished the bug, picking up the feature? Clear. The vendor's guidance is explicit and it is one keystroke.</p>
+        <p><strong>3. Steer compaction with an explicit focus.</strong> If a summarisation is going to happen anyway, say what must survive it. Name the decision, the constraint and the file that matters, so the lossy step loses the right things.</p>
+        <p><strong>4. Name the files.</strong> Do not hope it finds them. Pointing at three specific files is faster, cheaper and more accurate than asking it to search, and it also tells you something: if you cannot name the three files, you do not understand the task well enough to delegate it yet.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>What a small window does to a codebase over a year<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>There is a consequence to all of this that shows up in the code itself rather than in the invoice. GitClear, analysing 211 million changed lines authored between 2020 and 2024, observed that the most popular assistant of 2024 was limited to roughly ten files fitting in its context window.</p>
+        <p>Follow that through. If the assistant can only see ten files, it cannot know that the helper you need already exists in the eleventh. So it writes a new one. That is not a flaw in the model's reasoning, it is arithmetic, and it is a direct mechanical driver of duplication.</p>
+        <div class="callout tip">
+          <p><strong>Why this matters tonight rather than in session 3.</strong> Session 3 is about catching duplication in your diff. This is the cheaper version: pointing at the file that already contains the helper means it never gets written twice in the first place. Context work is duplication prevention.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Your spec, your context pack, and one honest comparison</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">Take the real feature you picked in session 1. By the end of these twenty-two minutes it has a written spec, a written context pack, and you have watched the same task run twice under different conditions.</p>
+
+    <div class="tick" data-stages="Clear|Spec|Context|Ask|Check" data-title="The loop, every task, no exceptions">
+      <p class="tick-note" data-stage="0"><b>Clear.</b> New task, new window. If it does not touch the same files as the last thing, start clean.</p>
+      <p class="tick-note" data-stage="1"><b>Spec.</b> What it must do, plus empty input, the boundary, and the error path. Written down, not held in your head.</p>
+      <p class="tick-note" data-stage="2"><b>Context.</b> Name the three files. Name the convention it will otherwise break.</p>
+      <p class="tick-note" data-stage="3"><b>Ask.</b> Now, and only now. The ask is the shortest part of the loop.</p>
+      <p class="tick-note" data-stage="4"><b>Check.</b> Read the diff against the spec you just wrote. Session 3 is entirely about this step.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p><strong>Minutes 1 to 6 · write the spec.</strong> Five bullets, no more. What it does, what it returns, what happens on empty input, what happens at the boundary, what happens when the dependency fails. If a bullet is hard to write, that is the bullet the model was going to guess.</p></div>
+      <div class="step"><p><strong>Minutes 7 to 13 · write the context pack.</strong> Three files by path and one line each on why. The convention it must follow. The helper that already exists so it does not write a second one. Keep it as a note you can paste, because you will paste it many times.</p></div>
+      <div class="step"><p><strong>Minutes 14 to 18 · run it stale.</strong> Use a session that has been open for a while on something else. Give it the bare ask, no spec, no context. Save what comes back without judging it yet.</p></div>
+      <div class="step"><p><strong>Minutes 19 to 22 · run it fresh.</strong> Clear. Paste the spec, paste the context pack, then the same ask. Put the two outputs side by side and mark three concrete differences: a named edge case handled, a convention respected, a helper reused instead of reinvented.</p></div>
+      <div class="step"><p><strong>The honest bit.</strong> Sometimes the stale run is fine. Note that too. The claim is not that context always changes the answer, it is that context is the only lever you control when the answer is wrong for reasons no test will report.</p></div>
+    </div>
+
+    <div class="wipe" data-title="The same feature, asked two ways" data-label-a="Bare ask, stale session"
+         data-label-b="Spec plus context, fresh session" data-foot="Drag right to left to reveal the rewrite. Both asks take about a minute to type.">
+      <div class="wipe-a">
+        <p>"Add a function to load the monthly usage file and return the totals."</p>
+        <p>Reads the file directly, hard-codes the path, raises on a missing file, and writes a parsing helper the repo already has in two other places.</p>
+      </div>
+      <div class="wipe-b">
+        <p>"Add loadMonthlyUsage to reports/loaders.py. Follow the pattern in loaders.py and use the existing parse_row helper. Config comes from settings.py, never a literal path. Missing file returns a Result with an error, we do not raise across this boundary. Empty file returns zero totals, not None."</p>
+        <p>Uses the existing helper and config, returns the error rather than raising, and handles the empty file because you named it.</p>
+      </div>
+    </div>
+
+    <div class="tryrow" data-fn="wordcount" data-multiline="1" data-title="Measure the context pack you just wrote" data-hint="Paste your spec plus context pack here" data-seed="Add loadMonthlyUsage to reports/loaders.py. Follow the pattern in loaders.py and use the existing parse_row helper. Config comes from settings.py, never a literal path. Missing file returns a Result with an error, we do not raise across this boundary. Empty file returns zero totals, not None." data-cta="Measure it" data-foot="There is no target length. What matters is that it exists as text you can paste again tomorrow, instead of a thing you re-improvise every morning."></div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 3</h2>
+      <span class="tag exercise">25 min</span>
+    </div>
+    <ol>
+      <li><strong>Write the project instructions file.</strong> One file at the repo root. Conventions, test command, structure, and the three things newcomers always get wrong. Twenty lines is plenty and it pays for itself in a week.</li>
+      <li><strong>Clear between tasks for one week.</strong> Every time you switch to unrelated work, clear. Note the two or three moments where it felt wasteful, because those are the moments worth discussing in session 3.</li>
+      <li><strong>Catch one compaction.</strong> Next time a long session summarises itself, read what survived and write down one thing that did not. That is the concrete cost of a lossy step.</li>
+      <li><strong>Ship the next slice of your feature</strong> using the Clear, Spec, Context, Ask, Check loop. Bring the diff to session 3, because that diff is what session 3 reviews.</li>
+      <li><strong>Optional.</strong> Compare your own usage against the vendor's published benchmark of around $13 per developer per active day. If you are far above it, the first thing to check is session length, not model choice.</li>
+    </ol>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 2 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Why does a session that has been open all day get more expensive and less reliable at the same time?</p>
+      <button class="qopt" type="button">A · The tool re-reads your whole repository on every message</button>
+      <button class="qopt" type="button">B · The full conversation is sent with every request, and auto-compaction summarises the older parts away when the window fills</button>
+      <button class="qopt" type="button">C · Longer prompts are billed at a higher rate per token</button>
+      <p class="qwhy">Anthropic's docs say Claude Code "sends your full conversation with every request", so a one-line question in an all-day session still draws usage for the whole conversation. Auto-compaction then "summarizes conversation history when approaching context limits", which is lossy by design.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">2 · In session 1's playground, switching on "give it the surrounding code" did not move the score at all. What did it change?</p>
+      <button class="qopt" type="button">A · Nothing. It was a placebo lever included to make a point about noise</button>
+      <button class="qopt" type="button">B · It stopped the code inventing a third way of doing something the repo already does, which no test could ever report</button>
+      <button class="qopt" type="button">C · It made the test suite run faster by reducing the amount of generated code</button>
+      <p class="qwhy">The score stayed at five of five and the amber convention warning cleared. That is the whole lesson: the context lever has no scoreboard, so it gets skipped, and the cost lands on the next person to read the file.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · You finish a bug fix and pick up an unrelated feature in the same session. What does the vendor's own guidance say to do?</p>
+      <button class="qopt" type="button">A · Use /clear, because stale context wastes tokens on every subsequent message</button>
+      <button class="qopt" type="button">B · Keep going, since the model reliably ignores history that is not relevant</button>
+      <button class="qopt" type="button">C · Open a second session in parallel and keep both running</button>
+      <p class="qwhy">Verbatim from the docs: "Use `/clear` to start fresh when switching to unrelated work. Stale context wastes tokens on every subsequent message." The same page traces runaway spend to long sessions that were never cleared.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ OFFICIAL COVERAGE ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic Claude Code cost documentation</span><span class="note">Full conversation sent with every request, auto-compaction summarising history at the context limit, and the instruction to clear when switching to unrelated work</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">The vendor-diagnosed cause of runaway spend</span><span class="note">"Usually traces back to long sessions that were never cleared", taught alongside the published benchmark of around $13 per developer per active day and $150-250 per month</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">GitClear, February 2025</span><span class="note">211 million changed lines authored 2020 to 2024. Used here for the context-window observation as a mechanical driver of duplication, not as a prophecy</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Microsoft Learn Copilot fundamentals · DeepLearning.AI Claude Code</span><span class="note">Both cover context and instruction files as tool surface. This session maps against their working content and adds the cost and degradation mechanics they do not</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Full source map with every URL: <span class="mono">materials/official-course-map.md</span> in this repo. Certificates, videos and assessments stay with the official providers.</p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 2 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>The window is the whole world</b><span>Four layers: the ask, the spec, the files you point at, the conventions. Two of them never show up in a test.</span></div>
+      <div class="cheat-item"><b>Long sessions silt up</b><span>The full conversation is resent every request, then summarised away when it fills. Neither is a warm-up.</span></div>
+      <div class="cheat-item"><b>Clear is the fix, and it is free</b><span>Switching to unrelated work? Clear. The vendor says stale context wastes tokens on every subsequent message.</span></div>
+      <div class="cheat-item"><b>Cost and quality are one problem</b><span>You are paying to resend the same stale history the model is being misled by.</span></div>
+      <div class="cheat-item"><b>Name the three files</b><span>If you cannot name them, you do not understand the task well enough to delegate it yet.</span></div>
+      <div class="cheat-item"><b>Context prevents duplication</b><span>An assistant that cannot see the eleventh file will write a helper that already exists in it.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>You now have a spec, a context pack and a diff you produced properly. Session 3 is the step almost everyone skips: you read that diff line by line, with a checklist, and you find something in it. Bring the diff, and bring the willingness to be a little embarrassed by it.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 2 of 6 · learn-ai-coding-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="03-the-review-problem.html">Next: The review problem →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+</body>
+</html>
