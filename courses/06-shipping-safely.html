@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://phoebefu6.github.io/learn-ai-coding-with-phoebe/assets/og-cover.png">
 <!-- social:end -->
 <title>Session 6 · Shipping safely - learn ai coding with phoebe</title>
-<link rel="stylesheet" href="../assets/style.css?v=1">
+<link rel="stylesheet" href="../assets/style.css?v=2">
 </head>
 <body>
 
@@ -53,30 +53,6 @@
 
 <main class="wrap">
 
-  <!-- ============ INTRO ============ -->
-  <section class="section" id="intro">
-    <div class="section-kicker">
-      <span class="klabel">Part 0</span>
-      <h2>Where you are now</h2>
-    </div>
-    <p class="lede">You have a real feature, written over five sessions, sitting on a branch. The only question left is the one this whole course was built around: <strong>does merging it make your codebase better or worse?</strong> That question has a team-scale answer, and it is not about your keyboard.</p>
-    <div class="legend">
-      <span class="pill">🎫 Clear all three quiz questions to stamp your final passport slot</span>
-      <span class="pill">Live = presented in the 45 minutes</span>
-      <span class="pill">Self-study = the full depth, after class</span>
-    </div>
-    <div class="callout win">
-      <p><strong>★ What you walk out with tonight.</strong> A merged feature, a checklist you can run before every merge for the rest of your career, an honest list of what you never hand over, and a measurement habit that outlives every number quoted in this course.</p>
-    </div>
-    <details class="card" open>
-      <summary><span class="mode live">Live</span>Why the last session is about your team, not your keyboard<span class="mini">3 min</span><span class="caret">▶</span></summary>
-      <div class="body">
-        <p>Sessions 1 through 5 were about what happens between you and the model. This one is about what happens after you accept the suggestion: the review, the tests, the branch, the merge, and the pager at two in the morning.</p>
-        <p>That is where the largest body of evidence in this field lives, and it says something uncomfortable. These tools are now measurably good for how much you ship, and still measurably bad for whether what you ship stays up. The difference between those two outcomes is not the model. It is what you built around it.</p>
-      </div>
-    </details>
-  </section>
-
   <!-- ============ PART 1 ============ -->
   <section class="section" id="part-1">
     <div class="section-kicker">
@@ -84,7 +60,12 @@
       <h2>Ninety percent use it, thirty percent do not trust it</h2>
       <span class="tag concept">7 min live</span>
     </div>
-    <p class="lede">DORA's 2025 report, "State of AI-assisted Software Development", surveyed roughly 5,000 professionals. Three of its numbers, held together, are the spine of this session.</p>
+    <p class="lede">You have a real feature, written over five sessions, sitting on a branch. The only question left is the one the course was built around: <strong>does merging it make your codebase better or worse?</strong> That question has a team-scale answer, and DORA's 2025 report, "State of AI-assisted Software Development", is where it lives. Roughly 5,000 professionals, and three numbers that are the spine of this session.</p>
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your final passport slot</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+    </div>
 
     <figure class="zoomable">
       <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DORA 2025 found 90 percent use AI at work, over 80 percent believe it increased their productivity, and 30 percent report little or no trust in the code it generates">
@@ -114,8 +95,8 @@
       <figcaption>🔍 Click to zoom - adoption is near universal and trust is not</figcaption>
     </figure>
 
-    <details class="card">
-      <summary><span class="mode live">Live</span>The pivot from 2024, and the sentence underneath it<span class="mini">4 min</span><span class="caret">▶</span></summary>
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>The pivot from 2024, and the sentence underneath it<span class="mini">6 min</span><span class="caret">▶</span></summary>
       <div class="body">
         <p>The 2025 report changed its own position on throughput. In DORA's words, "we observe a positive relationship between AI adoption on both software delivery throughput and product performance". That is new, and it is good news. The same sentence keeps going: "However, AI adoption does continue to have a <strong>negative relationship with software delivery stability</strong>."</p>
         <div class="prompt-box good">
@@ -126,16 +107,9 @@ automated testing, mature version control practices, and fast feedback
 loops, an increase in change volume leads to instability."
         </div>
         <p>Read that as an engineering statement rather than a caution. It names the input, the failure mode, and the three things that prevent it. That is a specification for what you build tonight.</p>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary><span class="mode self">Self-study</span>The line to build the whole session around<span class="mini">3 min</span><span class="caret">▶</span></summary>
-      <div class="body">
         <div class="callout tip">
-          <p><strong>"AI doesn't fix a team; it amplifies what's already there."</strong> DORA, 2025.</p>
+          <p><strong>"AI doesn't fix a team; it amplifies what's already there."</strong> DORA, 2025. This explains every contradiction in the course at once. A team with a suite that asserts, small diffs and fast feedback gets amplified into shipping more. A team without those gets amplified into more incidents. Same tool, same prompts, opposite outcome. It also makes "should we adopt AI" the wrong question for a lead to ask. The honest version is <em>what is already true about how we ship, and do we want more of it?</em></p>
         </div>
-        <p>This explains every contradiction in the course at once. A team with a suite that asserts, small diffs and fast feedback gets amplified into shipping more. A team without those gets amplified into more incidents. Same tool, same prompts, opposite outcome. It also makes "should we adopt AI" the wrong question for a lead to ask. The honest version is <em>what is already true about how we ship, and do we want more of it?</em></p>
       </div>
     </details>
   </section>
@@ -196,18 +170,6 @@ loops, an increase in change volume leads to instability."
       </div>
     </details>
 
-    <div class="wipe" data-title="The same feature, two shapes of diff" data-label-a="One giant diff"
-         data-label-b="Four small diffs" data-foot="Drag right to left. Nothing about the feature changed. Only whether a human can actually read it.">
-      <div class="wipe-a">
-        <p>One pull request. 1,400 lines across 23 files, generated in one pass and accepted in one pass.</p>
-        <p>The reviewer opens it, scrolls, and approves, because reading it properly would take an afternoon nobody has this week. The approval is real. The review is not.</p>
-      </div>
-      <div class="wipe-b">
-        <p>Four pull requests. The largest is 180 lines, and each one does exactly one thing.</p>
-        <p>Every title can be checked against its own diff, and each is read end to end in under ten minutes. Same feature, same day, and now the approval means something.</p>
-      </div>
-    </div>
-
     <details class="card">
       <summary><span class="mode self">Self-study</span>Version control hygiene, and why it matters more now<span class="mini">5 min</span><span class="caret">▶</span></summary>
       <div class="body">
@@ -216,6 +178,7 @@ loops, an increase in change volume leads to instability."
           <li><strong>A message that says why, not what.</strong> The diff already says what. In six months the only person who can reconstruct why is the one who wrote it down.</li>
           <li><strong>Branch, never straight to main.</strong> Especially when an agent is doing the typing, because the cost of a bad revert scales with volume.</li>
           <li><strong>Read the diff, not the summary of the diff.</strong> The summary was written by the same thing that wrote the code.</li>
+          <li><strong>Four small pull requests beat one large one.</strong> A 1,400-line diff gets approved without being read. Four diffs of under 200 lines each get read end to end, on the same day, by the same reviewer.</li>
         </ul>
         <div class="prompt-box bad">
           <span class="label">✗ What skipping the read actually looks like</span>
@@ -267,7 +230,6 @@ git diff --stat main...  # what did the whole branch touch?
         <text class="c6cA-z" x="160" y="86" fill="#3A2A00">Slow down and read it twice</text>
         <text class="c6cA-i" x="160" y="114">A schema change with no rollback path</text>
         <text class="c6cA-i" x="160" y="140">A one-way backfill over live rows</text>
-        <text class="c6cA-i" x="160" y="166">Anything you cannot cheaply revert</text>
         <text class="c6cA-z" x="490" y="86" fill="#991B1B">Never hand this over</text>
         <text class="c6cA-i" x="490" y="114">Auth, secrets, security-sensitive code</text>
         <text class="c6cA-i" x="490" y="140">Money, payments, personal data</text>
@@ -279,7 +241,6 @@ git diff --stat main...  # what did the whole branch touch?
         <text class="c6cA-z" x="490" y="216" fill="#3A2A00">Get a second pair of eyes</text>
         <text class="c6cA-i" x="490" y="244">A new dependency added to the build</text>
         <text class="c6cA-i" x="490" y="270">A public API signature change</text>
-        <text class="c6cA-i" x="490" y="296">Anything that touches every caller</text>
         <text class="c6cA-a" x="470" y="352" text-anchor="middle">Blast radius, contained on the left, wide on the right</text>
         <text class="c6cA-a" transform="rotate(-90 118 320)" x="118" y="320" text-anchor="start">Harder to undo, going up</text>
         <text class="c6cA-n" x="20" y="384">The fifth one is not on this grid: the decision about what to build is never handed over.</text>
@@ -299,13 +260,7 @@ git diff --stat main...  # what did the whole branch touch?
           <tr><td>OpenAI</td><td><span class="mono">danger-full-access</span> is labelled <strong>"not recommended"</strong></td><td>The vendor named the mode after the risk. That is as clear as documentation ever gets</td></tr>
         </table>
         <p>None of these are about the model being weak. They are about where responsibility sits, which is why each one is a sentence you can quote in a review conversation without sounding like the person who is against progress.</p>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary><span class="mode self">Self-study</span>The fifth item, which is not a security control<span class="mini">4 min</span><span class="caret">▶</span></summary>
-      <div class="body">
-        <p>Four items on the list are about damage. The fifth is not. <strong>The decision about what to build is never handed over</strong>, and it belongs on the same list because it fails the same way: quietly, and only visibly much later. An assistant will happily implement the feature you described. It has no way of knowing that the feature should not exist, that the ticket describes a symptom rather than a cause, or that the right change is to delete something instead.</p>
+        <p><strong>The fifth item is not a security control.</strong> Four items on the list are about damage. The last one, <strong>the decision about what to build</strong>, belongs there because it fails the same way: quietly, and only visibly much later. An assistant will happily implement the feature you described. It has no way of knowing the feature should not exist, that the ticket describes a symptom rather than a cause, or that the right change is to delete something instead.</p>
         <div class="callout tip">
           <p><strong>A cheap habit.</strong> Before you open the assistant, write one sentence naming who is worse off if this feature does not exist. If you cannot write it, you have found something more useful than a fast implementation.</p>
         </div>
@@ -353,7 +308,6 @@ git diff --stat main...  # what did the whole branch touch?
         <text class="c6dA-r" x="770" y="232" text-anchor="middle">NOASSERTION</text>
         <text class="c6dA-s" x="770" y="251" text-anchor="middle">no licence found</text>
         <text class="c6dA-s" x="20" y="296">GitHub notes the cloud agent may still match public sources despite blocking policies.</text>
-        <text class="c6dA-s" x="20" y="318">Unknown is not the same as permissive, and a setting is not the same as a guarantee.</text>
       </svg>
       <figcaption>🔍 Click to zoom - the filter is a setting, the responsibility is not</figcaption>
     </figure>
@@ -484,8 +438,7 @@ compared to our estimates from early 2025."
       <li><strong>Track time to merge.</strong> For every change for four weeks: the moment you started, and the moment it landed on main including review and rework. A note in a text file is enough.</li>
       <li><strong>Track rework rate.</strong> The share of those merged changes you had to go back and fix within a week. This is the number that catches speed which was not real.</li>
       <li><strong>Compare against your session 1 baseline.</strong> You measured one honest task in week one. Four weeks against that is not a study, but it is yours, and it is more relevant to your decisions than any published figure in this course.</li>
-      <li><strong>Run the pre-merge sequence every single time.</strong> Diff, imports, tests, secrets, human. If you drop one, drop it deliberately and write down which.</li>
-      <li><strong>Then read the two numbers together.</strong> Faster with flat rework is a real win. Faster with rising rework is the DORA finding happening to you personally, and you now know exactly which part of the stack to go and fix.</li>
+      <li><strong>Run the pre-merge sequence every single time,</strong> and then read the two numbers together. Faster with flat rework is a real win. Faster with rising rework is the DORA finding happening to you personally, and you now know exactly which part of the stack to go and fix.</li>
     </ol>
   </section>
 
