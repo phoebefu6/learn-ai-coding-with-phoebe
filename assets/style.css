@@ -3,6 +3,8 @@
    (CSS var names still read --indigo/--amber; they hold SQL-blue values.) */
 
 :root {
+  --indigo-solid: #077D9A;
+  --indigo-text: #077995;
   --indigo: #0891B2;
   --indigo-deep: #164E63;
   --indigo-mid: #06B6D4;
@@ -39,7 +41,7 @@ body {
 
 /* ---------- header band ---------- */
 .masthead {
-  background: var(--indigo);
+  background: var(--indigo-solid);
   color: #fff;
   padding: 2.5rem 0 2.25rem;
 }
@@ -71,7 +73,7 @@ body {
   font-weight: 600;
   white-space: nowrap;
 }
-.chip.level { background: #fff; color: var(--indigo); }
+.chip.level { background: #fff; color: var(--indigo-text); }
 .chip.audience { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.35); }
 .chip.time { background: var(--ink); color: #fff; font-variant-numeric: tabular-nums; }
 
@@ -103,7 +105,7 @@ body {
   transition: all .15s ease;
 }
 .btn:hover { border-color: var(--indigo); color: var(--indigo); }
-.btn.primary { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.btn.primary { background: var(--indigo-solid); border-color: var(--indigo-solid); color: #fff; }
 .btn.primary:hover { background: var(--indigo-deep); }
 
 /* ---------- sections ---------- */
@@ -137,7 +139,7 @@ main { padding: 2.5rem 0 4rem; }
   text-transform: uppercase;
   letter-spacing: .08em;
 }
-.tag.concept { background: var(--indigo-50); color: var(--indigo); }
+.tag.concept { background: var(--indigo-50); color: var(--indigo-text); }
 .tag.demo { background: var(--amber-50); color: var(--amber-ink); }
 .tag.exercise { background: var(--ink); color: #fff; }
 
@@ -153,7 +155,7 @@ main { padding: 2.5rem 0 4rem; }
   border-radius: 999px;
   flex: none;
 }
-.mode.live { background: var(--indigo); color: #fff; }
+.mode.live { background: var(--indigo-solid); color: #fff; }
 .mode.self { background: #fff; color: var(--muted); border: 1px solid var(--hairline); }
 
 /* ---------- accordions ---------- */
@@ -205,8 +207,8 @@ details.card .body h4:first-child { margin-top: 0; }
   font-size: .78rem;
   font-weight: 600;
 }
-.pill.solid { background: var(--indigo); color: #fff; }
-.pill.light { background: var(--indigo-50); color: var(--indigo); }
+.pill.solid { background: var(--indigo-solid); color: #fff; }
+.pill.light { background: var(--indigo-50); color: var(--indigo-text); }
 .pill.inkpill { background: var(--ink); color: #fff; }
 .pill.amber, .pill.peach { background: var(--amber); color: var(--amber-ink); }
 .pill.bare { color: var(--faint); }
@@ -255,7 +257,7 @@ table.clean td:first-child { font-weight: 600; }
   position: absolute;
   top: -0.7rem;
   left: 1rem;
-  background: var(--indigo);
+  background: var(--indigo-solid);
   color: #fff;
   font-family: "Inter", -apple-system, sans-serif;
   font-size: .68rem;
@@ -305,7 +307,7 @@ table.clean td:first-child { font-weight: 600; }
   width: 1.7rem; height: 1.7rem;
   border-radius: 999px;
   background: var(--indigo-50);
-  color: var(--indigo);
+  color: var(--indigo-text);
   font-weight: 700;
   font-size: .85rem;
   display: inline-flex;
@@ -541,7 +543,7 @@ details.card summary:hover { background: #F4FAFC; }
   font-variant-numeric: tabular-nums;
 }
 .journey a:hover { border-color: #fff; transform: scale(1.12); }
-.journey a.here { background: #fff; color: var(--indigo); border-color: #fff; }
+.journey a.here { background: #fff; color: var(--indigo-text); border-color: #fff; }
 .journey a.dd-chip { width: auto; border-radius: 999px; padding: 0 .7rem; font-size: .72rem; }
 
 /* ---------- check-yourself quiz ---------- */
@@ -569,7 +571,7 @@ details.card summary:hover { background: #F4FAFC; }
   transition: all .15s ease;
 }
 .quiz-q .qopt:hover { border-color: var(--indigo); background: var(--indigo-50); }
-.quiz-q .qopt.correct { background: var(--indigo); border-color: var(--indigo); color: #fff; font-weight: 600; }
+.quiz-q .qopt.correct { background: var(--indigo-solid); border-color: var(--indigo-solid); color: #fff; font-weight: 600; }
 .quiz-q .qopt.correct::after { content: "  ✓"; }
 .quiz-q .qopt.wrong { background: #FEF2F2; border-color: #FCA5A5; color: #991B1B; animation: qshake .3s ease; }
 .quiz-q .qopt.wrong::after { content: "  ✗ try again"; font-size: .78rem; }
@@ -902,7 +904,7 @@ figure.zoomable.can-scroll figcaption::after {
   content: "⇄"; position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: 30px; height: 30px; border-radius: 999px;
-  background: var(--indigo); color: #fff;
+  background: var(--indigo-solid); color: #fff;
   display: grid; place-items: center;
   font-size: 0.85rem; font-weight: 800;
   box-shadow: 0 3px 12px rgba(0,0,0,.22);
@@ -923,7 +925,7 @@ figure.zoomable.can-scroll figcaption::after {
   position: absolute; left: var(--x); top: var(--y);
   transform: translate(-50%, -50%);
   width: 27px; height: 27px; border-radius: 999px;
-  border: 2px solid #fff; background: var(--indigo); color: #fff;
+  border: 2px solid #fff; background: var(--indigo-solid); color: #fff;
   font: 800 0.78rem/1 Inter, sans-serif;
   display: grid; place-items: center; cursor: pointer;
   box-shadow: 0 2px 9px rgba(0,0,0,.28);
@@ -989,9 +991,9 @@ figure.zoomable.can-scroll figcaption::after {
 .tick-btn {
   font: 700 0.8rem Inter, sans-serif; cursor: pointer;
   padding: 7px 15px; border-radius: 999px;
-  border: 1px solid var(--indigo); background: var(--indigo); color: #fff;
+  border: 1px solid var(--indigo-solid); background: var(--indigo-solid); color: #fff;
 }
-.tick-btn.ghost { background: #fff; color: var(--indigo); }
+.tick-btn.ghost { background: #fff; color: var(--indigo-text); }
 .tick-btn:disabled { opacity: .4; cursor: not-allowed; }
 .tick-note {
   display: none; margin-top: 12px; padding: 13px 15px;
@@ -1019,7 +1021,7 @@ figure.zoomable.can-scroll figcaption::after {
 .tr-go {
   font: 800 0.8rem Inter, sans-serif; cursor: pointer;
   padding: 0 18px; border-radius: 9px; min-height: 44px;
-  border: 1px solid var(--indigo); background: var(--indigo); color: #fff;
+  border: 1px solid var(--indigo-solid); background: var(--indigo-solid); color: #fff;
 }
 .tr-out {
   display: none; margin-top: 12px; padding: 13px 15px;
@@ -1094,7 +1096,7 @@ figure.zoomable.can-scroll figcaption::after {
   border: 1px solid var(--hairline); background: #fff; color: var(--muted);
   font: 800 0.82rem Inter, sans-serif;
 }
-.sc-opts button.on { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+.sc-opts button.on { background: var(--indigo-solid); border-color: var(--indigo-solid); color: #fff; }
 .sc-total {
   margin-top: 16px; padding: 15px 17px; border-radius: 10px;
   background: var(--indigo-50); border-left: 3px solid var(--indigo);
